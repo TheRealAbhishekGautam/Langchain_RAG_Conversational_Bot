@@ -6,8 +6,23 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    // Early theme init: set classes on <html> before Angular bootstraps
+    (function(){
+      try {
+        var key = 'rag_theme';
+        var t = localStorage.getItem(key) || 'light';
+        var el = document.documentElement;
+        el.classList.remove('theme-dark','theme-light','dark','light');
+        el.classList.add('theme-' + t, t);
+      } catch(e) {
+        // default to light
+        document.documentElement.classList.add('theme-light','light');
+      }
+    })();
+  </script>
 </head>
-<body class="h-full bg-slate-950 text-slate-100 antialiased">
+<body class="h-full antialiased">
   <app-root></app-root>
 </body>
 </html>

@@ -13,7 +13,7 @@ import { Session, ChatMessage } from '../../types/models';
   template: `
   <div class="flex flex-col h-full">
     <div class="flex-1 overflow-auto p-8 space-y-6" #scrollContainer>
-      <div *ngIf="messages().length === 0" class="h-full flex items-center justify-center text-center text-slate-500">
+  <div *ngIf="messages().length === 0" class="h-full flex items-center justify-center text-center text-theme-muted">
         <div>
           <h2 class="text-xl font-semibold mb-2">Ask anything about your documents</h2>
           <p class="text-sm">Upload documents in the Documents section and start a conversation.</p>
@@ -23,7 +23,7 @@ import { Session, ChatMessage } from '../../types/models';
       <div *ngFor="let m of messages()" class="flex flex-col gap-2 fade-in">
         <div class="flex items-start gap-3" [class.flex-row-reverse]="m.role==='user'">
           <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold"
-               [class.bg-primary-600]="m.role==='user'" [class.bg-slate-800]="m.role==='ai'">
+               [class.bg-primary-600]="m.role==='user'" [style.background]="m.role==='ai' ? 'var(--bg-elev)' : ''">
             {{ m.role==='user' ? 'You' : 'AI' }}
           </div>
           <div class="chat-bubble" [class.chat-bubble-user]="m.role==='user'" [class.chat-bubble-ai]="m.role==='ai'">
@@ -31,13 +31,13 @@ import { Session, ChatMessage } from '../../types/models';
             <div *ngIf="m.sources?.length" class="mt-2 flex flex-wrap gap-1">
               <span *ngFor="let s of m.sources" class="badge text-[10px]">Source: {{ s }}</span>
             </div>
-            <span class="block mt-1 text-[10px] text-slate-400">{{ m.timestamp | date:'shortTime' }}</span>
+            <span class="block mt-1 text-[10px] text-theme-muted">{{ m.timestamp | date:'shortTime' }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <form (ngSubmit)="send()" class="p-4 border-t border-slate-800 bg-slate-900/80 backdrop-blur">
+  <form (ngSubmit)="send()" class="p-4 border-t border-theme bg-theme/80 backdrop-blur">
       <div class="max-w-4xl mx-auto flex gap-3">
         <textarea [(ngModel)]="question" name="question" rows="1" required
           placeholder="Ask a question..." class="input resize-none flex-1"></textarea>

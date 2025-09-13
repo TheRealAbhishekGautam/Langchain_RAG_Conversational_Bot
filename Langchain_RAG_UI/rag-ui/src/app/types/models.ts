@@ -55,3 +55,55 @@ export interface Session {
   createdAt?: string;
   updatedAt?: string;
 }
+
+// Auth models
+export interface UserInfo {
+  user_id: number;
+  username: string;
+  email: string;
+  created_at: string;
+}
+
+export interface UserRegistrationRequest {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface UserRegistrationResponse {
+  success: boolean;
+  message: string;
+  user_info?: UserInfo;
+}
+
+export interface UserLoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface UserLoginResponse {
+  success: boolean;
+  message: string;
+  user_info?: UserInfo;
+  access_token?: string;
+  token_type?: string;
+}
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  new_password: string;
+}
+
+export interface ResetPasswordResponse {
+  success: boolean;
+  message: string;
+}

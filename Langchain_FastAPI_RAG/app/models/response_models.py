@@ -47,3 +47,9 @@ class UserLoginResponse(BaseResponse):
     user_info: Optional[UserInfo] = None
     access_token: Optional[str] = Field(None, description="JWT access token")
     token_type: str = Field(default="bearer", description="Token type")
+
+class ForgotPasswordResponse(BaseResponse):
+    pass
+
+class ResetPasswordResponse(BaseResponse):
+    pass

@@ -67,6 +67,17 @@ class SQLiteHandler:
                 )
             ''')
 
+            # Create reset tokens table if not exists
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS RESET_TOKENS (
+                    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    USER_ID INTEGER NOT NULL,
+                    TOKEN TEXT NOT NULL,
+                    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (USER_ID) REFERENCES USERS (ID) ON DELETE CASCADE
+                )
+            ''')
+
             conn.commit()
             logger.info("Database initialized successfully with clean schema")
 
@@ -278,5 +289,90 @@ class SQLiteHandler:
         except Exception as e:
             logger.error(f"Error retrieving user by ID: {str(e)}")
             return None
+        finally:
+            conn.close()
+
+    def store_reset_token(self, user_id: int, reset_token: str) -> bool:
+        """Store password reset token"""
+        try:
+            conn = self._get_connection()
+            
+            # Delete any existing tokens for this user
+            conn.execute('DELETE FROM RESET_TOKENS WHERE USER_ID = ?', (user_id,))
+            
+            # Insert new token
+            conn.execute(
+                'INSERT INTO RESET_TOKENS (USER_ID, TOKEN) VALUES (?, ?)',
+                (user_id, reset_token)
+            )
+            conn.commit()
+            logger.info(f"Reset token stored for user ID: {user_id}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Error storing reset token: {str(e)}")
+            return False
+        finally:
+            conn.close()
+
+    def verify_reset_token(self, user_id: int, token: str) -> bool:
+        """Verify if reset token exists and is valid (within 1 hour)"""
+        try:
+            conn = self._get_connection()
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT * FROM RESET_TOKENS 
+                WHERE USER_ID = ? AND TOKEN = ? 
+                AND datetime(CREATED_AT, '+1 hour') > datetime('now')
+            ''', (user_id, token))
+            
+            result = cursor.fetchone()
+            return result is not None
+
+        except Exception as e:
+            logger.error(f"Error verifying reset token: {str(e)}")
+            return False
+        finally:
+            conn.close()
+
+    def delete_reset_token(self, user_id: int, token: str) -> bool:
+        """Delete used reset token"""
+        try:
+            conn = self._get_connection()
+            conn.execute(
+                'DELETE FROM RESET_TOKENS WHERE USER_ID = ? AND TOKEN = ?',
+                (user_id, token)
+            )
+            conn.commit()
+            logger.info(f"Reset token deleted for user ID: {user_id}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Error deleting reset token: {str(e)}")
+            return False
+        finally:
+            conn.close()
+
+    def update_user_password(self, user_id: int, password_hash: str) -> bool:
+        """Update user password"""
+        try:
+            conn = self._get_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                'UPDATE USERS SET PASSWORD_HASH = ? WHERE ID = ?',
+                (password_hash, user_id)
+            )
+            conn.commit()
+            
+            if cursor.rowcount > 0:
+                logger.info(f"Password updated for user ID: {user_id}")
+                return True
+            else:
+                logger.warning(f"User ID {user_id} not found for password update")
+                return False
+
+        except Exception as e:
+            logger.error(f"Error updating user password: {str(e)}")
+            return False
         finally:
             conn.close()

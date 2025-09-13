@@ -5,11 +5,11 @@ from fastapi.responses import JSONResponse
 from typing import List
 from app.config.settings import settings
 from fastapi.middleware.cors import CORSMiddleware
-from app.models.request_models import ConversationRequest, DeleteDocumentRequest, DocumentListRequest, UserRegistrationRequest, UserLoginRequest
+from app.models.request_models import ConversationRequest, DeleteDocumentRequest, DocumentListRequest, UserRegistrationRequest, UserLoginRequest, ForgotPasswordRequest, ResetPasswordRequest
 from app.models.response_models import (
     AddDocumentResponse, DocumentListResponse, 
     DeleteDocumentResponse, ConversationResponse, ErrorResponse,
-    UserRegistrationResponse, UserLoginResponse
+    UserRegistrationResponse, UserLoginResponse, ForgotPasswordResponse, ResetPasswordResponse
 )
 from app.services.document_service import DocumentService
 from app.services.conversation_service import ConversationService
@@ -111,6 +111,56 @@ async def login_user(request: UserLoginRequest):
         raise
     except Exception as e:
         logger.error(f"Unexpected error during login: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@app.post("/api/auth/forgot-password", response_model=ForgotPasswordResponse, tags=["Authentication"])
+async def forgot_password(request: ForgotPasswordRequest):
+    """
+    Send password reset email
+
+    - **email**: Email address for password reset
+    """
+    try:
+        logger.info(f"Received forgot password request for email: {request.email}")
+
+        # Create reset token (returns None if email doesn't exist, but we don't reveal this)
+        reset_token = user_service.create_reset_token(request.email)
+        
+        # Always return success to avoid email enumeration
+        # In a real app, you would send an email with the reset_token here
+        logger.info(f"Password reset token created (if email exists): {request.email}")
+        
+        return ForgotPasswordResponse(
+            success=True,
+            message="If this email exists in our system, a password reset link has been sent."
+        )
+
+    except Exception as e:
+        logger.error(f"Unexpected error during forgot password: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@app.post("/api/auth/reset-password", response_model=ResetPasswordResponse, tags=["Authentication"])
+async def reset_password(request: ResetPasswordRequest):
+    """
+    Reset password using reset token
+
+    - **token**: Password reset token
+    - **new_password**: New password (minimum 8 characters)
+    """
+    try:
+        logger.info(f"Received password reset request")
+
+        result = user_service.reset_password(request.token, request.new_password)
+
+        if result['success']:
+            return ResetPasswordResponse(**result)
+        else:
+            raise HTTPException(status_code=400, detail=result['message'])
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error during password reset: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.post("/api/documents/add", response_model=AddDocumentResponse, tags=["Documents"])

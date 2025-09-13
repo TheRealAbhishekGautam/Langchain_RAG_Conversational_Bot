@@ -10,10 +10,10 @@ import { DocumentInfo } from '../../types/models';
   imports: [CommonModule, FormsModule],
   template: `
   <div class="h-full flex flex-col">
-    <div class="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
+  <div class="p-6 border-b border-theme flex items-center justify-between bg-theme/80">
       <div>
         <h2 class="text-lg font-semibold">Documents</h2>
-        <p class="text-xs text-slate-400">Manage knowledge base documents</p>
+  <p class="text-xs text-theme-muted">Manage knowledge base documents</p>
       </div>
       <label class="btn btn-primary cursor-pointer">
         <input type="file" hidden (change)="upload($event)" accept=".pdf,.docx" />
@@ -27,14 +27,14 @@ import { DocumentInfo } from '../../types/models';
           <div class="flex items-start justify-between gap-2">
             <div class="flex-1 min-w-0">
               <h3 class="font-medium text-sm truncate" title="{{ d.filename }}">{{ d.filename }}</h3>
-              <p class="text-[11px] text-slate-400">{{ d.file_type.toUpperCase() }} • {{ d.chunk_count }} chunks</p>
+              <p class="text-[11px] text-theme-muted">{{ d.file_type.toUpperCase() }} • {{ d.chunk_count }} chunks</p>
             </div>
             <button class="text-xs text-red-400 hover:text-red-300" (click)="remove(d)" [disabled]="loading()">Delete</button>
           </div>
-          <p class="text-[11px] text-slate-500">Uploaded {{ d.upload_timestamp | date:'short' }}</p>
+          <p class="text-[11px] text-theme-muted">Uploaded {{ d.upload_timestamp | date:'short' }}</p>
         </div>
       </div>
-      <p *ngIf="documents().length===0 && !loading()" class="text-sm text-slate-500">No documents uploaded yet.</p>
+  <p *ngIf="documents().length===0 && !loading()" class="text-sm text-theme-muted">No documents uploaded yet.</p>
       <p *ngIf="error()" class="text-xs text-red-400">{{ error() }}</p>
     </div>
   </div>

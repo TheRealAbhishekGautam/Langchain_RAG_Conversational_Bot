@@ -162,3 +162,78 @@ class UserService:
         except Exception as e:
             logger.error(f"Error getting current user: {str(e)}")
             return None
+
+    def create_reset_token(self, email: str) -> Optional[str]:
+        """Create a password reset token for an email"""
+        try:
+            user_data = self.db_handler.get_user_by_email(email)
+            if not user_data:
+                return None  # Don't reveal if email exists
+
+            # Create a reset token (expires in 1 hour)
+            reset_token_expire = timedelta(hours=1)
+            reset_token = self.create_access_token(
+                data={"sub": str(user_data['ID']), "type": "reset"}, 
+                expires_delta=reset_token_expire
+            )
+            
+            # Store reset token in database with expiry
+            self.db_handler.store_reset_token(user_data['ID'], reset_token)
+            
+            logger.info(f"Password reset token created for user: {user_data['USERNAME']}")
+            return reset_token
+
+        except Exception as e:
+            logger.error(f"Error creating reset token: {str(e)}")
+            return None
+
+    def reset_password(self, token: str, new_password: str) -> Dict:
+        """Reset password using reset token"""
+        try:
+            # Verify reset token
+            payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
+            user_id = payload.get("sub")
+            token_type = payload.get("type")
+            
+            if not user_id or token_type != "reset":
+                return {
+                    'success': False,
+                    'message': 'Invalid or expired reset token'
+                }
+
+            # Check if token exists in database
+            if not self.db_handler.verify_reset_token(int(user_id), token):
+                return {
+                    'success': False,
+                    'message': 'Invalid or expired reset token'
+                }
+
+            # Hash new password and update
+            password_hash = self.get_password_hash(new_password)
+            success = self.db_handler.update_user_password(int(user_id), password_hash)
+            
+            if success:
+                # Delete the used reset token
+                self.db_handler.delete_reset_token(int(user_id), token)
+                logger.info(f"Password reset successfully for user ID: {user_id}")
+                return {
+                    'success': True,
+                    'message': 'Password reset successfully'
+                }
+            else:
+                return {
+                    'success': False,
+                    'message': 'Failed to update password'
+                }
+
+        except JWTError:
+            return {
+                'success': False,
+                'message': 'Invalid or expired reset token'
+            }
+        except Exception as e:
+            logger.error(f"Error resetting password: {str(e)}")
+            return {
+                'success': False,
+                'message': f'Password reset failed: {str(e)}'
+            }
