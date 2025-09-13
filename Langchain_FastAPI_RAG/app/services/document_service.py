@@ -16,7 +16,7 @@ class DocumentService:
         self.vector_store_service = VectorStoreService()
         self.db_handler = SQLiteHandler()
 
-    async def add_document(self, file: UploadFile) -> Dict:
+    async def add_document(self, file: UploadFile, user_id: int) -> Dict:
         """Add a new document"""
         try:
             document_id = str(uuid.uuid4())
@@ -34,7 +34,8 @@ class DocumentService:
                 document_id=document_id,
                 filename=file.filename,
                 file_type=file_type,
-                chunk_count=len(splits)
+                chunk_count=len(splits),
+                user_id=user_id
             )
 
             if not metadata_success:
@@ -66,12 +67,12 @@ class DocumentService:
                 'document_info': None
             }
 
-    def get_document_list(self, limit: int = 10, offset: int = 0) -> Dict:
-        """Get list of documents"""
+    def get_document_list(self, user_id: int, limit: int = 10, offset: int = 0) -> Dict:
+        """Get list of documents for a specific user"""
         try:
-            # Get documents from database
-            documents_data = self.db_handler.get_document_list(limit, offset)
-            total_count = self.db_handler.get_total_document_count()
+            # Get documents from database - using updated signature
+            documents_data = self.db_handler.get_document_list(user_id, limit, offset)
+            total_count = self.db_handler.get_total_document_count(user_id)
 
             documents = []
             for doc_data in documents_data:
@@ -84,7 +85,7 @@ class DocumentService:
                 )
                 documents.append(document_info)
 
-            logger.info(f"Retrieved {len(documents)} documents")
+            logger.info(f"Retrieved {len(documents)} documents for user: {user_id}")
 
             return {
                 'success': True,
@@ -102,14 +103,14 @@ class DocumentService:
                 'total_count': 0
             }
 
-    def delete_document(self, document_id: str) -> Dict:
+    def delete_document(self, document_id: str, user_id: int) -> Dict:
         """Delete a document"""
         try:
             # Delete from vector store
             vector_success = self.vector_store_service.delete_documents(document_id)
 
             # Delete metadata from database
-            metadata_success = self.db_handler.delete_document_metadata(document_id)
+            metadata_success = self.db_handler.delete_document_metadata(document_id, user_id)
 
             if vector_success or metadata_success:
                 logger.info(f"Successfully deleted document: {document_id}")

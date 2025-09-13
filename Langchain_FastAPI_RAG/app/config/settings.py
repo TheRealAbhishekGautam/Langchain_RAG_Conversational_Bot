@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
 import os
+import secrets
 
 class Settings(BaseSettings):
     # OpenAI Configuration
@@ -27,6 +28,10 @@ class Settings(BaseSettings):
     api_title: str = "RAG FastAPI Application"
     api_description: str = "A FastAPI application for document-based conversational AI using RAG"
     api_version: str = "1.0.0"
+
+    # Authentication Configuration
+    secret_key: str = secrets.token_urlsafe(32)
+    access_token_expire_minutes: int = 30
 
     class Config:
         env_file = ".env"

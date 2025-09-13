@@ -33,3 +33,17 @@ class ConversationResponse(BaseResponse):
 class ErrorResponse(BaseResponse):
     error_code: str = Field(..., description="Error code")
     error_details: Optional[Dict[str, Any]] = None
+
+class UserInfo(BaseModel):
+    user_id: int = Field(..., description="User ID")
+    username: str = Field(..., description="Username")
+    email: str = Field(..., description="Email address")
+    created_at: datetime = Field(..., description="When the user was created")
+
+class UserRegistrationResponse(BaseResponse):
+    user_info: Optional[UserInfo] = None
+
+class UserLoginResponse(BaseResponse):
+    user_info: Optional[UserInfo] = None
+    access_token: Optional[str] = Field(None, description="JWT access token")
+    token_type: str = Field(default="bearer", description="Token type")

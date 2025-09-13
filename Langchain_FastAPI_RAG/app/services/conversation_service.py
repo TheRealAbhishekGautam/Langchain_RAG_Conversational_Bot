@@ -67,7 +67,7 @@ class ConversationService:
             logger.error(f"Error setting up conversation chains: {str(e)}")
             raise
 
-    def get_response(self, session_id: Optional[str], question: str) -> Dict:
+    def get_response(self, session_id: Optional[str], question: str, user_id: int) -> Dict:
         """Get conversational response"""
         try:
             # Generate new session_id if not provided
@@ -76,8 +76,8 @@ class ConversationService:
                 logger.info(f"Created new session: {session_id}")
 
             # Get chat history
-            chat_history = self.db_handler.get_chat_history(session_id)
-            logger.info(f"Retrieved {len(chat_history)} messages for session: {session_id}")
+            chat_history = self.db_handler.get_chat_history(session_id, user_id)
+            logger.info(f"Retrieved {len(chat_history)} messages for session: {session_id}, user: {user_id}")
 
             # Get response from RAG chain
             response = self.rag_chain.invoke({
@@ -100,7 +100,8 @@ class ConversationService:
                 session_id=session_id,
                 user_query=question,
                 gpt_response=answer,
-                model="gpt-4o-mini"
+                model="gpt-4o-mini",
+                user_id=user_id
             )
 
             logger.info(f"Generated response for session: {session_id}")

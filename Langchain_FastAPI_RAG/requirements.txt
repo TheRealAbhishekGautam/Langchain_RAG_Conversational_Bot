@@ -12,3 +12,6 @@ sentence-transformers
 pydantic
 python-dotenv
 pydantic-settings
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator
