@@ -255,8 +255,8 @@ import { CommonModule } from '@angular/common';
           </rect>
           
           <!-- Query text with proper padding -->
-          <text x="0" y="20" text-anchor="middle" fill="white" class="text-sm font-medium">What is the main</text>
-          <text x="0" y="35" text-anchor="middle" fill="white" class="text-sm font-medium">conclusion?</text>
+          <text x="0" y="20" text-anchor="middle" fill="white" class="text-xs font-medium">What is the main</text>
+          <text x="0" y="35" text-anchor="middle" fill="white" class="text-xs font-medium">conclusion?</text>
           
           <!-- Typing cursor with padding -->
           <rect x="42" y="28" width="1.5" height="10" fill="white">
@@ -282,7 +282,7 @@ import { CommonModule } from '@angular/common';
           </rect>
           
           <!-- Answer content with proper padding -->
-          <text x="0" y="22" text-anchor="middle" fill="white" class="text-sm font-semibold">✨ Intelligent Answer</text>
+          <text x="0" y="22" text-anchor="middle" fill="white" class="text-xs font-semibold">Intelligent Answer</text>
           <text x="0" y="38" text-anchor="middle" fill="white" class="text-xs opacity-90">with source citations</text>
           <text x="0" y="52" text-anchor="middle" fill="white" class="text-xs opacity-90">and confidence scores</text>
           
