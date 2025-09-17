@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
+import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeroSvgComponent],
   styles: [`
     .glass {
       background: var(--glass-bg);
@@ -122,7 +123,14 @@ import { ThemeService } from '../../services/theme.service';
           <a href="#pricing" class="hover:opacity-100 transition-opacity">Pricing</a>
         </nav>
         <div class="flex items-center gap-2">
-          <button class="btn btn-outline text-xs" (click)="toggleTheme()">{{ theme.theme()==='dark' ? 'Light mode' : 'Dark mode' }}</button>
+          <button
+            class="btn btn-outline text-lg"
+            (click)="toggleTheme()"
+            [attr.aria-label]="theme.theme()==='dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+            [title]="theme.theme()==='dark' ? 'Light mode' : 'Dark mode'"
+          >
+            {{ theme.theme()==='dark' ? '☀️' : '🌙' }}
+          </button>
           <a routerLink="/login" class="btn btn-outline text-xs">Sign in</a>
           <a routerLink="/register" class="btn btn-primary text-xs">Get started</a>
         </div>
@@ -179,30 +187,56 @@ import { ThemeService } from '../../services/theme.service';
       <div class="w-full px-4 py-16 sm:py-20 relative">
         <div class="max-w-7xl mx-auto">
           <!-- Main Content Area -->
-          <div class="text-center mb-12">
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 mx-auto max-w-5xl">
-              <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent">
-                Chat with your documents
-              </span>
-              <br>
-              <span class="text-theme">using AI</span>
-            </h1>
-            <p class="text-xl sm:text-2xl text-theme-secondary max-w-3xl mx-auto mb-8">
-              Upload multiple PDFs and DOCX files and get precise, grounded answers with citations from your content.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4 mb-8">
-              <a routerLink="/register" class="btn btn-primary text-lg px-8 py-3 hover-scale">Create free account</a>
-              <a routerLink="/login" class="btn btn-outline text-lg px-8 py-3 hover-scale">Sign in</a>
+          <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+            <!-- Left Side - Text Content -->
+            <div class="text-center lg:text-left">
+              <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+                <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                  Chat with your documents
+                </span>
+                <br>
+                <span class="text-theme">using AI</span>
+              </h1>
+              <p class="text-xl sm:text-2xl text-theme-secondary mb-8">
+                Upload multiple PDFs and DOCX files and get precise, grounded answers with citations from your content.
+              </p>
+              <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
+                <a routerLink="/register" class="btn btn-primary text-lg px-8 py-3 hover-scale">Create free account</a>
+                <a routerLink="/login" class="btn btn-outline text-lg px-8 py-3 hover-scale">Sign in</a>
+              </div>
+            </div>
+
+            <!-- Right Side - Hero Illustration -->
+            <div class="flex justify-center lg:justify-end">
+              <app-hero-svg></app-hero-svg>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <!-- Enhanced RAG AI Workflow Visualization -->
-          <div class="relative glass rounded-2xl p-8 border border-theme">
-            <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-indigo-600/5 rounded-2xl"></div>
-            
-            <!-- SVG Workflow Diagram -->
-            <div class="relative">
-              <svg class="w-full h-[500px] text-theme-secondary" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+    <!-- How It Works Section -->
+    <section class="w-full py-16 relative">
+      <div class="max-w-7xl mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+            <span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              How does it work?
+            </span>
+          </h2>
+          <p class="text-xl text-theme-secondary max-w-3xl mx-auto">
+            Our advanced RAG (Retrieval-Augmented Generation) system processes your documents and delivers precise answers
+          </p>
+        </div>
+
+        <!-- Enhanced RAG AI Workflow Visualization -->
+        <div class="relative glass rounded-2xl p-8 border border-theme">
+          <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-indigo-600/5 rounded-2xl"></div>
+          
+          <!-- SVG Workflow Diagram -->
+          <div class="relative">
+            <svg class="w-full h-[500px] text-theme-secondary" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
                 <!-- Background Grid -->
                 <defs>
                   <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
@@ -294,298 +328,260 @@ import { ThemeService } from '../../services/theme.service';
                   <text x="150" y="80" text-anchor="middle" fill="#fff" class="text-xs">in the research paper?</text>
                   
                   <!-- Query Vectorization -->
-                  <path d="M150 110 L150 130" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" marker-end="url(#arrowhead)">
-                    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
-                  </path>
-                  
-                  <text x="150" y="160" text-anchor="middle" fill="currentColor" class="text-xs font-semibold text-theme">Vector Similarity Search</text>
-                  
-                  <!-- Search Animation -->
-                  <g class="search-animation" transform="translate(80, 170)">
-                    <circle cx="30" cy="10" r="8" fill="none" stroke="currentColor" class="text-emerald-400" stroke-width="2">
-                      <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                  <g class="query-vectors" transform="translate(120, 120)">
+                    <circle cx="0" cy="0" r="2" fill="currentColor" class="text-emerald-400" opacity="0.7">
+                      <animate attributeName="r" values="1;3;1" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
-                    <path d="M36 16 L44 24" stroke="currentColor" class="text-emerald-400" stroke-width="2" stroke-linecap="round">
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-                    </path>
-                  </g>
-                  
-                  <text x="150" y="245" text-anchor="middle" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Assembling context...</text>
-                  
-                  <!-- Context Assembly -->
-                  <g class="context-assembly" transform="translate(100, 260)">
-                    <rect x="0" y="0" width="100" height="40" rx="8" fill="currentColor" class="text-emerald-500" opacity="0.3">
-                      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
-                    </rect>
-                    <text x="50" y="25" text-anchor="middle" fill="currentColor" class="text-xs font-semibold text-theme">🤖 AI Response</text>
+                    <circle cx="20" cy="5" r="1.5" fill="currentColor" class="text-teal-400" opacity="0.6">
+                      <animate attributeName="r" values="0.5;2.5;0.5" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="40" cy="10" r="2.5" fill="currentColor" class="text-green-400" opacity="0.8">
+                      <animate attributeName="r" values="1.5;3.5;1.5" dur="2.2s" repeatCount="indefinite"/>
+                    </circle>
                   </g>
                 </g>
 
-                <!-- Citations & Sources (Right) -->
-                <g class="citations-sources" transform="translate(780, 180)">
-                  <rect x="50" y="-40" width="200" height="160" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-amber-500" opacity="0.2">
+                <!-- Similarity Search (Center) -->
+                <g class="similarity-search" transform="translate(400, 280)">
+                  <rect x="50" y="-40" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-orange-500" opacity="0.2">
+                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3.2s" repeatCount="indefinite"/>
+                  </rect>
+                  <text x="150" y="0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">🔍 Similarity Search</text>
+                  
+                  <!-- Search visualization -->
+                  <g class="search-viz" transform="translate(120, 40)">
+                    <circle cx="0" cy="0" r="25" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-400" opacity="0.5">
+                      <animate attributeName="r" values="20;30;20" dur="3s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="0" cy="0" r="5" fill="currentColor" class="text-orange-500"/>
+                    
+                    <!-- Relevant documents found -->
+                    <g class="found-docs">
+                      <rect x="-8" y="-40" width="16" height="20" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.8">
+                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="25" y="-15" width="16" height="20" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.7">
+                        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="-35" y="15" width="16" height="20" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.6">
+                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/>
+                      </rect>
+                    </g>
+                  </g>
+                </g>
+
+                <!-- Answer Generation (Bottom-Right) -->
+                <g class="answer-generation" transform="translate(750, 320)">
+                  <rect x="50" y="-40" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-purple-500" opacity="0.2">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="4.5s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">📎 Citations & Sources</text>
+                  <text x="150" y="0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">💡 Answer Generation</text>
                   
-                  <!-- Citation Cards -->
-                  <g class="citation-cards" transform="translate(70, 20)">
-                    <g class="citation-1">
-                      <rect x="0" y="0" width="160" height="25" rx="4" fill="currentColor" class="text-amber-400" opacity="0.2"/>
-                      <text x="10" y="20" fill="currentColor" class="text-xs text-theme">📄 Research_Paper.pdf - Page 23</text>
-                    </g>
-                    
-                    <g class="citation-2" transform="translate(0, 35)">
-                      <rect x="0" y="0" width="160" height="25" rx="4" fill="currentColor" class="text-orange-400" opacity="0.2"/>
-                      <text x="10" y="20" fill="currentColor" class="text-xs text-theme">📊 Data_Analysis.docx - Section 4</text>
-                    </g>
-                    
-                    <g class="citation-3" transform="translate(0, 70)">
-                      <rect x="0" y="0" width="160" height="25" rx="4" fill="currentColor" class="text-yellow-400" opacity="0.2"/>
-                      <text x="10" y="20" fill="currentColor" class="text-xs text-theme">📈 Results_Summary.pdf - Figure 7</text>
-                    </g>
-                    
-                    <!-- Confidence Scores -->
-                    <g class="confidence-scores" transform="translate(0, 105)">
-                      <text x="0" y="15" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Confidence Scores:</text>
-                      
-                      <!-- Score 1 -->
-                      <rect x="0" y="20" width="96" height="8" rx="4" fill="currentColor" class="text-green-400" opacity="0.3"/>
-                      <text x="125" y="32" fill="currentColor" class="text-xs text-theme">96%</text>
-                      
-                      <!-- Score 2 -->
-                      <rect x="0" y="35" width="84" height="8" rx="4" fill="currentColor" class="text-yellow-400" opacity="0.3"/>
-                      <text x="125" y="47" fill="currentColor" class="text-xs text-theme">84%</text>
-                      
-                      <!-- Score 3 -->
-                      <rect x="0" y="50" width="78" height="8" rx="4" fill="currentColor" class="text-orange-400" opacity="0.3"/>
-                      <text x="125" y="62" fill="currentColor" class="text-xs text-theme">78%</text>
-                    </g>
-                  </g>
+                  <!-- Generated answer -->
+                  <rect x="70" y="40" width="160" height="80" rx="10" fill="var(--primary)" opacity="0.9">
+                    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+                  </rect>
+                  <text x="150" y="65" text-anchor="middle" fill="#fff" class="text-xs">Based on the analysis of</text>
+                  <text x="150" y="80" text-anchor="middle" fill="#fff" class="text-xs">3 relevant documents,</text>
+                  <text x="150" y="95" text-anchor="middle" fill="#fff" class="text-xs">the key findings are...</text>
+                  <text x="150" y="110" text-anchor="middle" fill="#fff" class="text-xs font-bold">📎 With citations</text>
                 </g>
 
-                <!-- Connecting Arrows with Animation -->
-                <!-- Upload to Vector Processing -->
-                <path d="M250 180 L330 200" stroke="currentColor" class="text-sky-400" stroke-width="3" fill="none" marker-end="url(#arrowhead)" opacity="0.7">
-                  <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite"/>
-                </path>
-                
-                <!-- Vector to Query -->
-                <path d="M480 200 L570 140" stroke="currentColor" class="text-indigo-400" stroke-width="3" fill="none" marker-end="url(#arrowhead)" opacity="0.7">
-                  <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite" begin="1s"/>
-                </path>
-                
-                <!-- Query to Citations -->
-                <path d="M720 200 L830 200" stroke="currentColor" class="text-emerald-400" stroke-width="3" fill="none" marker-end="url(#arrowhead)" opacity="0.7">
-                  <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite" begin="2s"/>
-                </path>
-              </svg>
+                <!-- Data Flow Arrows -->
+                <g class="data-flow">
+                  <!-- Upload to Vector Processing -->
+                  <path d="M300 140 Q340 160 380 180" stroke="currentColor" stroke-width="3" fill="none" class="text-sky-500" marker-end="url(#arrowhead)">
+                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite"/>
+                  </path>
+                  
+                  <!-- Query to Similarity Search -->
+                  <path d="M620 160 Q620 200 600 240" stroke="currentColor" stroke-width="3" fill="none" class="text-emerald-500" marker-end="url(#arrowhead)">
+                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite" begin="1s"/>
+                  </path>
+                  
+                  <!-- Vector Processing to Similarity Search -->
+                  <path d="M480 240 Q520 250 550 280" stroke="currentColor" stroke-width="3" fill="none" class="text-indigo-500" marker-end="url(#arrowhead)">
+                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                  </path>
+                  
+                  <!-- Similarity Search to Answer Generation -->
+                  <path d="M600 320 Q700 320 750 320" stroke="currentColor" stroke-width="3" fill="none" class="text-orange-500" marker-end="url(#arrowhead)">
+                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite" begin="2s"/>
+                  </path>
+                </g>
+            </svg>
+          </div>
+          
+          <!-- Process Steps Description -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            <div class="text-center">
+              <div class="w-12 h-12 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-white font-bold">1</span>
+              </div>
+              <h3 class="font-semibold text-theme mb-2">Upload Documents</h3>
+              <p class="text-sm opacity-70 text-theme-muted">Upload your PDFs, DOCX files, and other documents to our secure platform.</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-white font-bold">2</span>
+              </div>
+              <h3 class="font-semibold text-theme mb-2">Process & Vectorize</h3>
+              <p class="text-sm opacity-70 text-theme-muted">AI breaks down your documents into semantic chunks and creates vector embeddings.</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-white font-bold">3</span>
+              </div>
+              <h3 class="font-semibold text-theme mb-2">Smart Search</h3>
+              <p class="text-sm opacity-70 text-theme-muted">Your questions are matched with the most relevant document sections using similarity search.</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-white font-bold">4</span>
+              </div>
+              <h3 class="font-semibold text-theme mb-2">Generate Answer</h3>
+              <p class="text-sm opacity-70 text-theme-muted">AI generates accurate answers with proper citations from your documents.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Enhanced Features Section -->
-    <section id="features" class="w-full py-20 relative overflow-hidden">
-      <!-- Background Elements -->
-  <div class="absolute inset-0 bg-gradient-to-br from-[color-mix(in_oklab,var(--primary),transparent_90%)] to-[color-mix(in_oklab,#6366f1,transparent_90%)]"></div>
-      
-      <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl sm:text-5xl font-bold mb-6">
-            <span class="bg-gradient-to-r from-sky-500 to-indigo-600 bg-clip-text text-transparent">
-              Powerful AI Features
-            </span>
-          </h2>
-          <p class="text-xl opacity-80 max-w-3xl mx-auto text-theme-muted">
-            Experience the future of document interaction with our comprehensive RAG AI platform
-          </p>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          <div class="group relative">
-            <div class="card p-8 hover-lift fade-in-up h-full relative overflow-hidden">
-              <!-- Background glow effect -->
-              <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div class="relative z-10">
-                <div class="text-sky-400 mb-6 flex justify-center">
-                    <svg width="64" height="64" viewBox="0 0 32 32" fill="none" class="hover:scale-110 transition-transform duration-300">
-                      <!-- Animated Document Stack -->
-                      <rect x="6" y="8" width="16" height="20" rx="2" fill="currentColor" opacity="0.3">
-                        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
-                      </rect>
-                      <rect x="8" y="6" width="16" height="20" rx="2" fill="currentColor" opacity="0.6">
-                        <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                      </rect>
-                      <rect x="10" y="4" width="16" height="20" rx="2" fill="currentColor">
-                        <animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite" begin="1s"/>
-                      </rect>
-                      <!-- Document Lines -->
-                      <line x1="13" y1="9" x2="22" y2="9" stroke="white" stroke-width="0.5" opacity="0.6"/>
-                      <line x1="13" y1="12" x2="20" y2="12" stroke="white" stroke-width="0.5" opacity="0.6"/>
-                      <line x1="13" y1="15" x2="23" y2="15" stroke="white" stroke-width="0.5" opacity="0.6"/>
-                      <!-- Upload Arrow -->
-                      <path d="M16 28 L16 24 M14 26 L16 24 L18 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.8">
-                        <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite"/>
-                        <animateTransform attributeName="transform" type="translate" values="0 0; 0 -2; 0 0" dur="1.5s" repeatCount="indefinite"/>
-                      </path>
-                    </svg>
-                  </div>
-                  <h3 class="text-xl font-bold mb-3 text-center text-theme">Upload Multiple Documents</h3>
-                  <p class="text-center opacity-80 leading-relaxed text-theme-muted">Add PDFs and Word files to build your knowledge base. We handle chunking and indexing automatically.</p>
-                </div>
-              </div>
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gradient-to-br from-theme-bg to-theme-bg/50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-16 text-theme">
+          <span class="bg-gradient-to-r from-sky-400 to-indigo-600 bg-clip-text text-transparent">
+            Powerful Features
+          </span>
+        </h2>
+        
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="card p-8 hover-lift">
+            <div class="w-16 h-16 bg-gradient-to-br from-sky-400 to-sky-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <span class="text-2xl">📄</span>
             </div>
-
-            <div class="group relative">
-            <div class="card p-8 hover-lift fade-in-up h-full relative overflow-hidden">
-              <!-- Background glow effect -->
-              <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div class="relative z-10">
-                <div class="text-emerald-400 mb-6 flex justify-center">
-                  <svg width="64" height="64" viewBox="0 0 32 32" fill="none" class="hover:scale-110 transition-transform duration-300">
-                    <!-- Brain with Neural Network -->
-                    <ellipse cx="16" cy="14" rx="10" ry="8" fill="currentColor" opacity="0.2">
-                      <animate attributeName="opacity" values="0.2;0.4;0.2" dur="3s" repeatCount="indefinite"/>
-                    </ellipse>
-                    <!-- Neural connections -->
-                    <g opacity="0.7">
-                      <circle cx="12" cy="10" r="1.5" fill="currentColor">
-                        <animate attributeName="r" values="1;2;1" dur="2s" repeatCount="indefinite"/>
-                      </circle>
-                      <circle cx="20" cy="12" r="1.5" fill="currentColor">
-                        <animate attributeName="r" values="1;2;1" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                      </circle>
-                      <circle cx="16" cy="18" r="1.5" fill="currentColor">
-                        <animate attributeName="r" values="1;2;1" dur="2s" repeatCount="indefinite" begin="1s"/>
-                      </circle>
-                      <circle cx="10" cy="16" r="1.5" fill="currentColor">
-                        <animate attributeName="r" values="1;2;1" dur="2s" repeatCount="indefinite" begin="1.5s"/>
-                      </circle>
-                      <!-- Connecting lines -->
-                      <line x1="12" y1="10" x2="16" y2="18" stroke="currentColor" stroke-width="0.5" opacity="0.5">
-                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
-                      </line>
-                      <line x1="20" y1="12" x2="10" y2="16" stroke="currentColor" stroke-width="0.5" opacity="0.5">
-                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="1s"/>
-                      </line>
-                    </g>
-                    <!-- Query bubble -->
-                    <rect x="4" y="24" width="24" height="6" rx="3" fill="currentColor" opacity="0.3"/>
-                    <text x="16" y="28" text-anchor="middle" fill="white" class="text-xs">AI Processing</text>
-                  </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-center text-theme">Intelligent Q&A</h3>
-                <p class="text-center opacity-80 leading-relaxed text-theme-muted">Ask natural language questions and get accurate answers based on your uploaded documents with source citations.</p>
-              </div>
-            </div>
+            <h3 class="text-xl font-semibold mb-4 text-theme">Multi-Format Support</h3>
+            <p class="opacity-80 text-theme-secondary">Upload PDFs, Word documents, and text files. Our AI understands the structure and content of your documents.</p>
           </div>
-
-          <div class="group relative">
-            <div class="card p-8 hover-lift fade-in-up h-full relative overflow-hidden">
-              <!-- Background glow effect -->
-              <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div class="relative z-10">
-                <div class="text-purple-400 mb-6 flex justify-center">
-                  <svg width="64" height="64" viewBox="0 0 32 32" fill="none" class="hover:scale-110 transition-transform duration-300">
-                    <!-- Citation/Reference Icon -->
-                    <rect x="6" y="4" width="20" height="24" rx="2" fill="currentColor" opacity="0.2"/>
-                    <rect x="8" y="6" width="16" height="20" rx="1" fill="currentColor" opacity="0.1"/>
-                    
-                    <!-- Quote marks -->
-                    <path d="M10 12 Q9 11 10 10 Q11 11 10 12" fill="currentColor" opacity="0.8">
-                      <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
-                    </path>
-                    <path d="M22 12 Q21 11 22 10 Q23 11 22 12" fill="currentColor" opacity="0.8">
-                      <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="1s"/>
-                    </path>
-                    
-                    <!-- Text lines -->
-                    <line x1="10" y1="15" x2="22" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.6"/>
-                    <line x1="10" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="0.5" opacity="0.6"/>
-                    <line x1="10" y1="19" x2="22" y2="19" stroke="currentColor" stroke-width="0.5" opacity="0.6"/>
-                    
-                    <!-- Source link -->
-                    <circle cx="20" cy="22" r="2" fill="currentColor" opacity="0.6">
-                      <animate attributeName="r" values="1.5;2.5;1.5" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-                    <path d="M18 24 L22 24" stroke="currentColor" stroke-width="1" opacity="0.8"/>
-                  </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-center text-theme">Source Citations</h3>
-                <p class="text-center opacity-80 leading-relaxed text-theme-muted">Every answer includes precise citations with page numbers and document references for complete transparency.</p>
-              </div>
+          
+          <div class="card p-8 hover-lift">
+            <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <span class="text-2xl">🎯</span>
             </div>
+            <h3 class="text-xl font-semibold mb-4 text-theme">Precise Answers</h3>
+            <p class="opacity-80 text-theme-secondary">Get accurate, contextual answers grounded in your documents with exact source citations and page references.</p>
+          </div>
+          
+          <div class="card p-8 hover-lift">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <span class="text-2xl">⚡</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-theme">Lightning Fast</h3>
+            <p class="opacity-80 text-theme-secondary">Advanced vector search and caching provide instant responses to your questions across large document collections.</p>
+          </div>
+          
+          <div class="card p-8 hover-lift">
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <span class="text-2xl">🔒</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-theme">Secure & Private</h3>
+            <p class="opacity-80 text-theme-secondary">Enterprise-grade security ensures your documents remain private. Full GDPR compliance and data encryption.</p>
+          </div>
+          
+          <div class="card p-8 hover-lift">
+            <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <span class="text-2xl">👥</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-theme">Team Collaboration</h3>
+            <p class="opacity-80 text-theme-secondary">Share document collections and insights with your team. Role-based access and collaborative workspaces.</p>
+          </div>
+          
+          <div class="card p-8 hover-lift">
+            <div class="w-16 h-16 bg-gradient-to-br from-rose-400 to-rose-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <span class="text-2xl">📊</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-theme">Smart Analytics</h3>
+            <p class="opacity-80 text-theme-secondary">Track usage patterns, popular queries, and document insights to optimize your knowledge management.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Enhanced Pricing Section -->
-  <section id="pricing" class="w-full py-20 relative overflow-hidden">
-      <!-- Animated background elements -->
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute top-20 left-10 w-72 h-72 bg-sky-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-      </div>
-      
-      <div class="max-w-7xl mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl sm:text-5xl font-bold mb-6">
-            <span class="bg-gradient-to-r from-emerald-500 to-sky-600 bg-clip-text text-transparent">
-              Simple, Transparent Pricing
-            </span>
-          </h2>
-          <p class="text-xl opacity-80 max-w-2xl mx-auto text-theme-muted">
-            Choose the perfect plan for your document analysis needs
-          </p>
+    <!-- Testimonials -->
+    <section class="py-20 gradient-animated">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-16 text-theme">
+          <span class="bg-gradient-to-r from-indigo-400 to-purple-600 bg-clip-text text-transparent">
+            What Our Users Say
+          </span>
+        </h2>
+        
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div *ngFor="let testimonial of testimonials" class="card p-8 hover-lift">
+            <div class="flex items-center mb-6">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-sky-400 to-indigo-600 flex items-center justify-center text-white text-xl">
+                {{ testimonial.avatar }}
+              </div>
+              <div class="ml-4">
+                <h4 class="font-semibold text-theme">{{ testimonial.name }}</h4>
+                <p class="text-sm opacity-70 text-theme-muted">{{ testimonial.role }}, {{ testimonial.company }}</p>
+              </div>
+            </div>
+            <p class="italic text-theme-secondary">"{{ testimonial.content }}"</p>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <!-- Starter Plan -->
-          <div class="card p-6 hover-lift relative overflow-hidden">
-            <!-- Background Glow -->
-            <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-blue-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+    <!-- Pricing -->
+    <section id="pricing" class="py-20 bg-gradient-to-br from-theme-bg to-theme-bg/50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-16 text-theme">
+          <span class="bg-gradient-to-r from-sky-400 to-indigo-600 bg-clip-text text-transparent">
+            Simple Pricing
+          </span>
+        </h2>
+        
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="card p-8 hover-lift relative">
+            <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-indigo-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
             <div class="relative">
               <h3 class="text-lg font-semibold text-theme">Starter</h3>
-              <p class="text-sm opacity-70 text-theme-muted">Perfect for individuals</p>
+              <p class="text-sm opacity-70 text-theme-muted">For individuals</p>
               <p class="mt-4 text-3xl font-bold text-theme">Free</p>
               <ul class="mt-4 space-y-2 text-sm opacity-80 text-theme-muted">
                 <li>• 5 documents</li>
-                <li>• 100 questions/month</li>
-                <li>• Email support</li>
+                <li>• 50 questions/month</li>
+                <li>• Basic support</li>
               </ul>
-              <a routerLink="/register" class="btn btn-outline mt-6 w-full justify-center hover-scale">Get Started</a>
+              <a routerLink="/register" class="btn btn-outline mt-6 w-full justify-center hover-scale">Get started</a>
             </div>
           </div>
-
-          <!-- Pro Plan -->
-          <div class="card p-6 border-indigo-700/40 hover-lift relative overflow-hidden">
-            <!-- Popular Badge -->
-            <div class="absolute -right-3 -top-3 bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-xs px-3 py-1 rounded-full transform rotate-12 shadow-lg">
-              Popular
-              <div class="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
+          
+          <div class="card p-8 hover-lift relative border-2 border-indigo-500">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <span class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium px-4 py-1 rounded-full">Popular</span>
             </div>
-            <!-- Background Glow -->
-            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/8 to-purple-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
             <div class="relative">
               <h3 class="text-lg font-semibold text-theme">Pro</h3>
-              <p class="text-sm opacity-70 text-theme-muted">For power users</p>
-              <p class="mt-4 text-3xl font-bold text-theme">$9<span class="text-base font-medium opacity-70">/mo</span></p>
+              <p class="text-sm opacity-70 text-theme-muted">For professionals</p>
+              <p class="mt-4 text-3xl font-bold text-theme">$19<span class="text-base font-medium opacity-70">/mo</span></p>
               <ul class="mt-4 space-y-2 text-sm opacity-80 text-theme-muted">
                 <li>• 100 documents</li>
-                <li>• 10k questions/month</li>
+                <li>• Unlimited questions</li>
                 <li>• Priority support</li>
               </ul>
-              <a routerLink="/register" class="btn btn-primary mt-6 w-full justify-center hover-scale">Upgrade</a>
+              <a routerLink="/register" class="btn btn-primary mt-6 w-full justify-center hover-scale">Choose Pro</a>
             </div>
           </div>
-
-          <!-- Team Plan -->
-          <div class="card p-6 border-emerald-700/40 hover-lift relative overflow-hidden">
-            <!-- Background Glow -->
+          
+          <div class="card p-8 hover-lift relative">
             <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
             <div class="relative">
               <h3 class="text-lg font-semibold text-theme">Team</h3>
@@ -609,7 +605,6 @@ import { ThemeService } from '../../services/theme.service';
         <p class="opacity-60 text-theme-muted">© {{year}} RAG Conversational AI. All rights reserved.</p>
       </div>
     </footer>
-  </div>
   `
 })
 export class HomePageComponent { 
