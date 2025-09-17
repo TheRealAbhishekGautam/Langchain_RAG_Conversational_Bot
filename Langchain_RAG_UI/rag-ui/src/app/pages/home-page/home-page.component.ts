@@ -109,30 +109,44 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
   template: `
   <div class="min-h-screen gradient-animated">
     <!-- Nav -->
-    <header class="sticky top-0 z-20 border-b border-theme bg-theme/80 backdrop-blur">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-md bg-gradient-to-br from-sky-500 to-indigo-600">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.5 7H22l-5.5 4 2 8L12 17l-6.5 4 2-8L2 9h6.5L12 2z" fill="currentColor"/></svg>
+  <header class="sticky top-2 z-30 bg-transparent backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-6">
+        <div class="flex items-center gap-3 group">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-600 text-white shadow-md ring-1 ring-white/10">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:scale-110"><path d="M12 2l3.5 7H22l-5.5 4 2 8L12 17l-6.5 4 2-8L2 9h6.5L12 2z" fill="currentColor"/></svg>
           </span>
-          <span class="font-semibold tracking-tight text-theme">RAG Conversational AI</span>
+          <div class="flex flex-col -space-y-0.5">
+            <span class="font-semibold tracking-tight bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              Ask The Document
+            </span>
+            <span class="text-[10px] uppercase tracking-wider text-theme-secondary/60">Conversational RAG</span>
+          </div>
         </div>
-        <nav class="hidden sm:flex items-center gap-6 text-sm opacity-80 text-theme-secondary">
-          <a routerLink="/" class="hover:opacity-100 transition-opacity">Home</a>
-          <a href="#features" class="hover:opacity-100 transition-opacity">Features</a>
-          <a href="#pricing" class="hover:opacity-100 transition-opacity">Pricing</a>
+        <nav class="hidden sm:flex items-center gap-1 text-sm font-medium">
+          <a routerLink="/" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">
+            <span>Home</span>
+            <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span>
+          </a>
+          <a href="#features" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">
+            <span>Features</span>
+            <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span>
+          </a>
+          <a href="#pricing" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">
+            <span>Pricing</span>
+            <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span>
+          </a>
         </nav>
         <div class="flex items-center gap-2">
           <button
-            class="btn btn-outline text-lg"
+            class="btn btn-outline text-base h-10 px-4"
             (click)="toggleTheme()"
             [attr.aria-label]="theme.theme()==='dark' ? 'Switch to light mode' : 'Switch to dark mode'"
             [title]="theme.theme()==='dark' ? 'Light mode' : 'Dark mode'"
           >
             {{ theme.theme()==='dark' ? '☀️' : '🌙' }}
           </button>
-          <a routerLink="/login" class="btn btn-outline text-xs">Sign in</a>
-          <a routerLink="/register" class="btn btn-primary text-xs">Get started</a>
+            <a routerLink="/login" class="btn btn-outline text-xs h-10 px-5">Sign in</a>
+            <a routerLink="/register" class="btn btn-primary text-xs h-10 px-5 hover-scale">Get started</a>
         </div>
       </div>
     </header>
@@ -896,9 +910,72 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
     </section>
 
     <!-- Footer -->
-  <footer class="py-12 border-t border-theme bg-theme/80 backdrop-blur">
-      <div class="max-w-6xl mx-auto px-4 text-center">
-        <p class="opacity-60 text-theme-muted">© {{year}} RAG Conversational AI. All rights reserved.</p>
+    <footer class="relative bg-theme/75 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="grid gap-12 lg:grid-cols-5">
+          <!-- Brand / Summary -->
+          <div class="lg:col-span-2 space-y-5">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-600 text-white shadow ring-1 ring-white/10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.5 7H22l-5.5 4 2 8L12 17l-6.5 4 2-8L2 9h6.5L12 2z" fill="currentColor"/></svg>
+              </span>
+              <div class="flex flex-col -space-y-0.5">
+                <span class="font-semibold tracking-tight bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Ask The Document</span>
+                <span class="text-[11px] uppercase tracking-wider text-theme-secondary/60">Conversational RAG</span>
+              </div>
+            </div>
+            <p class="text-sm leading-relaxed text-theme-secondary/80 max-w-sm">Transform static knowledge into interactive answers. Upload, query, and trust every response with source-backed transparency.</p>
+            <div class="flex items-center gap-4 pt-2">
+              <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub" class="text-theme-secondary/60 hover:text-theme transition-colors">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="none"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.17c0 4.47 2.87 8.26 6.84 9.61.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05 .9 1.56 2.36 1.11 2.94.85.09-.67.35-1.11.63-1.37-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.74 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 6.8c.85.01 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05 .55 1.43.2 2.48.1 2.74a3.9 3.9 0 0 1 1.03 2.76c0 3.94-2.34 4.8-4.57 5.05 .36.32.67.94.67 1.9 0 1.37-.01 2.47-.01 2.81 0 .26.18.58.69.48A10.2 10.2 0 0 0 22 12.17C22 6.58 17.52 2 12 2Z"/></svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-theme-secondary/60 hover:text-theme transition-colors">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17V10.74H6V17H8.34M7.17 9.63A1.37 1.37 0 0 0 8.5 8.25A1.37 1.37 0 0 0 7.17 6.88A1.37 1.37 0 0 0 5.84 8.25A1.37 1.37 0 0 0 7.17 9.63M18 17V13.66C18 11.89 17.62 10.6 15.56 10.6C14.56 10.6 13.86 11.16 13.57 11.69H13.53V10.74H11.34V17H13.66V14.04C13.66 13.14 13.83 12.27 14.94 12.27C16.03 12.27 16.05 13.29 16.05 14.1V17H18Z"/></svg>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter" class="text-theme-secondary/60 hover:text-theme transition-colors">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.77.35-1.6.57-2.46.67a4.3 4.3 0 0 0 1.88-2.38 8.59 8.59 0 0 1-2.72 1.05 4.28 4.28 0 0 0-7.4 2.92c0 .33.04.66.11.97A12.13 12.13 0 0 1 3.16 4.9a4.27 4.27 0 0 0-.58 2.15 4.28 4.28 0 0 0 1.9 3.56 4.25 4.25 0 0 1-1.94-.53v.05a4.29 4.29 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.29 4.29 0 0 0 4 2.98A8.6 8.6 0 0 1 2 19.54a12.14 12.14 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.39-.01-.58A8.7 8.7 0 0 0 22 5.92Z"/></svg>
+              </a>
+            </div>
+          </div>
+          <!-- Links: Features -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-semibold tracking-wide text-theme">Features</h4>
+            <ul class="space-y-2 text-sm text-theme-secondary/70">
+              <li><a href="#features" class="hover:text-theme transition-colors">Multi-format ingest</a></li>
+              <li><a href="#features" class="hover:text-theme transition-colors">Semantic search</a></li>
+              <li><a href="#features" class="hover:text-theme transition-colors">Cited answers</a></li>
+              <li><a href="#features" class="hover:text-theme transition-colors">Analytics</a></li>
+            </ul>
+          </div>
+          <!-- Links: Resources -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-semibold tracking-wide text-theme">Resources</h4>
+            <ul class="space-y-2 text-sm text-theme-secondary/70">
+              <li><a href="#pricing" class="hover:text-theme transition-colors">Pricing</a></li>
+              <li><a href="#" class="hover:text-theme transition-colors">Documentation</a></li>
+              <li><a href="#" class="hover:text-theme transition-colors">API (coming)</a></li>
+              <li><a href="#" class="hover:text-theme transition-colors">Changelog</a></li>
+            </ul>
+          </div>
+          <!-- Links: Support -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-semibold tracking-wide text-theme">Support</h4>
+            <ul class="space-y-2 text-sm text-theme-secondary/70">
+              <li><a href="#" class="hover:text-theme transition-colors">Help center</a></li>
+              <li><a href="#" class="hover:text-theme transition-colors">Status</a></li>
+              <li><a href="#" class="hover:text-theme transition-colors">Security</a></li>
+              <li><a href="#" class="hover:text-theme transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+  <div class="mt-14 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-theme-secondary/60">
+          <p>© {{year}} Ask The Document. All rights reserved.</p>
+          <div class="flex items-center gap-6">
+            <a href="#" class="hover:text-theme transition-colors">Privacy</a>
+            <a href="#" class="hover:text-theme transition-colors">Terms</a>
+            <a href="#" class="hover:text-theme transition-colors">Cookie</a>
+          </div>
+        </div>
       </div>
     </footer>
   `
