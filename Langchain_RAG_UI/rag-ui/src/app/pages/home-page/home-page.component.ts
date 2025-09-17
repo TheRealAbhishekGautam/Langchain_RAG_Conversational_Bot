@@ -190,20 +190,34 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
           <div class="grid lg:grid-cols-2 gap-12 items-center">
             <!-- Left Side - Text Content -->
             <div class="text-center lg:text-left">
-              <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
-                <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent">
-                  Chat with your documents
-                </span>
-                <br>
-                <span class="text-theme">using AI</span>
+              <h1 class="relative inline-block text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight mb-8">
+                <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent">Chat with</span>
+                <span class="text-theme ml-3">Your Documents</span>
+                <span class="block text-theme mt-4 text-3xl sm:text-4xl font-bold">Using AI</span>
+                <span class="absolute -bottom-4 left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 w-48 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"></span>
               </h1>
-              <p class="text-xl sm:text-2xl text-theme-secondary mb-8">
-                Upload multiple PDFs and DOCX files and get precise, grounded answers with citations from your content.
+              <p class="mt-5 text-lg sm:text-xl text-theme-secondary/90 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Ingest PDFs, Word docs and text sources. Ask questions and receive cited, trustworthy answers grounded in your own content.
               </p>
-              <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
-                <a routerLink="/register" class="btn btn-primary text-lg px-8 py-3 hover-scale">Create free account</a>
-                <a routerLink="/login" class="btn btn-outline text-lg px-8 py-3 hover-scale">Sign in</a>
+              <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
+                <a routerLink="/register" class="btn btn-primary text-base sm:text-lg px-8 py-3 hover-scale">Create free account</a>
+                <a routerLink="/login" class="btn btn-outline text-base sm:text-lg px-8 py-3 hover-scale">Sign in</a>
               </div>
+              <!-- Mini Feature Badges -->
+              <!-- <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-4 text-sm">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="14" rx="1"/><rect x="14" y="4" width="7" height="14" rx="1"/><path d="M7 8h.01M7 12h.01M7 16h.01M17 8h.01M17 12h.01M17 16h.01"/></svg>
+                  <span class="text-theme-secondary">Multi-format</span>
+                </div>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>
+                  <span class="text-theme-secondary">Precise answers</span>
+                </div>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h6l-2 8 10-12h-6l2-8Z"/></svg>
+                  <span class="text-theme-secondary">Fast retrieval</span>
+                </div>
+              </div> -->
             </div>
 
             <!-- Right Side - Hero Illustration -->
