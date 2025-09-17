@@ -220,12 +220,12 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
       <div class="max-w-7xl mx-auto px-4">
         <!-- Section Header -->
         <div class="text-center mb-12">
-          <h2 class="text-4xl sm:text-5xl font-bold mb-4">
-            <span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
-              How does it work?
-            </span>
+          <h2 class="relative inline-block text-4xl sm:text-5xl font-bold leading-tight">
+            <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">How</span>
+            <span class="text-theme ml-3">It Works</span>
+            <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"></span>
           </h2>
-          <p class="text-xl text-theme-secondary max-w-3xl mx-auto">
+          <p class="mt-8 text-xl text-theme-secondary max-w-3xl mx-auto">
             Our advanced RAG (Retrieval-Augmented Generation) system processes your documents and delivers precise answers
           </p>
         </div>
@@ -245,8 +245,58 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
                   <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" class="text-sky-400"/>
                   </marker>
+                  <!-- Background ribbon gradient -->
+                  <linearGradient id="bg-ribbon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="currentColor" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="currentColor" stop-opacity="0.0"/>
+                  </linearGradient>
+                  <!-- Soft blur filter for glows -->
+                  <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+                  </filter>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)"/>
+
+                <!-- Decorative background to fill whitespace -->
+                <g aria-hidden="true" opacity="0.55">
+                  <!-- Diagonal ribbon -->
+                  <g fill="url(#bg-ribbon-gradient)" opacity="0.08">
+                    <path d="M -50 430 C 200 360, 400 360, 650 430 S 1050 500, 1150 430"/>
+                    <path d="M -50 455 C 200 385, 400 385, 650 455 S 1050 525, 1150 455"/>
+                  </g>
+
+                  <!-- Concentric rings (subtle) -->
+                  <g stroke="currentColor" stroke-width="1" opacity="0.08" class="text-indigo-400">
+                    <circle cx="120" cy="90" r="55">
+                      <animate attributeName="r" values="50;60;50" dur="9s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="880" cy="380" r="65" class="text-sky-400">
+                      <animate attributeName="r" values="60;72;60" dur="11s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+
+                  <!-- Gentle particle field -->
+                  <g>
+                    <circle cx="70" cy="300" r="1.6" fill="currentColor" class="text-cyan-300" opacity="0.35">
+                      <animate attributeName="cy" values="300;290;300" dur="6s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="930" cy="120" r="1.2" fill="currentColor" class="text-emerald-300" opacity="0.35">
+                      <animate attributeName="cy" values="120;110;120" dur="7s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="480" cy="470" r="1.4" fill="currentColor" class="text-purple-300" opacity="0.3">
+                      <animate attributeName="cy" values="470;455;470" dur="8s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+
+                  <!-- Soft glows behind each box -->
+                  <g filter="url(#soft-glow)">
+                    <circle cx="120" cy="90" r="38" fill="var(--primary)" opacity="0.06"/>
+                    <circle cx="350" cy="180" r="45" fill="var(--primary)" opacity="0.06"/>
+                    <circle cx="730" cy="90" r="42" fill="var(--primary)" opacity="0.06"/>
+                    <circle cx="650" cy="330" r="48" fill="var(--primary)" opacity="0.06"/>
+                    <circle cx="930" cy="400" r="50" fill="var(--primary)" opacity="0.06"/>
+                  </g>
+                </g>
 
                 <!-- Document Upload (Top-Left) -->
                 <g class="document-upload" transform="translate(-80, 40)">
@@ -604,7 +654,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
           </div>
           
           <!-- Process Steps Description -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
             <div class="text-center">
               <div class="w-12 h-12 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span class="text-white font-bold">1</span>
@@ -642,60 +692,96 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 bg-gradient-to-br from-theme-bg to-theme-bg/50">
+  <section id="features" class="py-14 md:py-12 bg-gradient-to-br from-theme-bg to-theme-bg/50">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-theme">
-          <span class="bg-gradient-to-r from-sky-400 to-indigo-600 bg-clip-text text-transparent">
-            Powerful Features
-          </span>
-        </h2>
+        <div class="text-center mb-16">
+          <h2 class="relative inline-block text-4xl md:text-5xl font-bold leading-tight">
+            <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">Powerful</span>
+            <span class="text-theme ml-3">Features</span>
+            <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"></span>
+          </h2>
+          <p class="mt-8 max-w-2xl mx-auto text-base md:text-lg text-theme-secondary/90 leading-relaxed">
+            Everything you need to transform raw documents into searchable, trustworthy answers—built with performance,
+            security, and clarity at its core.
+          </p>
+        </div>
         
         <div class="grid lg:grid-cols-3 gap-8">
-          <div class="card p-8 hover-lift">
-            <div class="w-16 h-16 bg-gradient-to-br from-sky-400 to-sky-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
-              <span class="text-2xl">📄</span>
+          <!-- Multi-Format Support -->
+          <div class="card p-8 hover-lift group relative overflow-hidden">
+            <div class="w-16 h-16 bg-gradient-to-br from-sky-400 to-sky-600 text-white rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M8 13h8M8 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-4 text-theme">Multi-Format Support</h3>
+            <h3 class="text-xl font-semibold mb-2 text-theme">Multi-Format Support</h3>
+            <div class="h-0.5 w-12 bg-white/10 rounded mb-4"></div>
             <p class="opacity-80 text-theme-secondary">Upload PDFs, Word documents, and text files. Our AI understands the structure and content of your documents.</p>
           </div>
           
-          <div class="card p-8 hover-lift">
-            <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
-              <span class="text-2xl">🎯</span>
+          <!-- Precise Answers -->
+          <div class="card p-8 hover-lift group relative overflow-hidden">
+            <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="1.8" fill="currentColor"/>
+              </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-4 text-theme">Precise Answers</h3>
+            <h3 class="text-xl font-semibold mb-2 text-theme">Precise Answers</h3>
+            <div class="h-0.5 w-12 bg-white/10 rounded mb-4"></div>
             <p class="opacity-80 text-theme-secondary">Get accurate, contextual answers grounded in your documents with exact source citations and page references.</p>
           </div>
           
-          <div class="card p-8 hover-lift">
-            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
-              <span class="text-2xl">⚡</span>
+          <!-- Lightning Fast -->
+          <div class="card p-8 hover-lift group relative overflow-hidden">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 text-white rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M13 2 3 14h6l-2 8 10-12h-6l2-8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-4 text-theme">Lightning Fast</h3>
+            <h3 class="text-xl font-semibold mb-2 text-theme">Lightning Fast</h3>
+            <div class="h-0.5 w-12 bg-white/10 rounded mb-4"></div>
             <p class="opacity-80 text-theme-secondary">Advanced vector search and caching provide instant responses to your questions across large document collections.</p>
           </div>
           
-          <div class="card p-8 hover-lift">
-            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
-              <span class="text-2xl">🔒</span>
+          <!-- Secure & Private -->
+          <div class="card p-8 hover-lift group relative overflow-hidden">
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-4 text-theme">Secure & Private</h3>
+            <h3 class="text-xl font-semibold mb-2 text-theme">Secure & Private</h3>
+            <div class="h-0.5 w-12 bg-white/10 rounded mb-4"></div>
             <p class="opacity-80 text-theme-secondary">Enterprise-grade security ensures your documents remain private. Full GDPR compliance and data encryption.</p>
           </div>
           
-          <div class="card p-8 hover-lift">
-            <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
-              <span class="text-2xl">👥</span>
+          <!-- Transparent Pricing (replaces Team Collaboration) -->
+          <div class="card p-8 hover-lift group relative overflow-hidden">
+            <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 text-white rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 9 13 2l9 9-7 7-9-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="12" cy="6" r="1.6" fill="currentColor"/>
+              </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-4 text-theme">Team Collaboration</h3>
-            <p class="opacity-80 text-theme-secondary">Share document collections and insights with your team. Role-based access and collaborative workspaces.</p>
+            <h3 class="text-xl font-semibold mb-2 text-theme">Transparent Pricing</h3>
+            <div class="h-0.5 w-12 bg-white/10 rounded mb-4"></div>
+            <p class="opacity-80 text-theme-secondary">Clear, value‑first plans with no hidden fees. Start free and upgrade only when you grow.</p>
           </div>
           
-          <div class="card p-8 hover-lift">
-            <div class="w-16 h-16 bg-gradient-to-br from-rose-400 to-rose-600 rounded-2xl flex items-center justify-center mb-6 ai-element">
-              <span class="text-2xl">📊</span>
+          <!-- Smart Analytics -->
+          <div class="card p-8 hover-lift group relative overflow-hidden">
+            <div class="w-16 h-16 bg-gradient-to-br from-rose-400 to-rose-600 text-white rounded-2xl flex items-center justify-center mb-6 ai-element">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 18V10M12 18V7M18 18V13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
             </div>
-            <h3 class="text-xl font-semibold mb-4 text-theme">Smart Analytics</h3>
+            <h3 class="text-xl font-semibold mb-2 text-theme">Smart Analytics</h3>
+            <div class="h-0.5 w-12 bg-white/10 rounded mb-4"></div>
             <p class="opacity-80 text-theme-secondary">Track usage patterns, popular queries, and document insights to optimize your knowledge management.</p>
           </div>
         </div>
@@ -705,11 +791,14 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
     <!-- Testimonials -->
     <section class="py-20 gradient-animated">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-theme">
-          <span class="bg-gradient-to-r from-indigo-400 to-purple-600 bg-clip-text text-transparent">
-            What Our Users Say
-          </span>
-        </h2>
+        <div class="text-center mb-16">
+          <h2 class="relative inline-block text-4xl md:text-5xl font-bold leading-tight">
+            <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">What Our</span>
+            <span class="text-theme ml-3">Users Say</span>
+            <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"></span>
+          </h2>
+          <p class="mt-8 max-w-2xl mx-auto text-base md:text-lg text-theme-secondary/90 leading-relaxed">Real teams and builders using the platform to accelerate knowledge discovery and decision making.</p>
+        </div>
         
         <div class="grid lg:grid-cols-3 gap-8">
           <div *ngFor="let testimonial of testimonials" class="card p-8 hover-lift">
@@ -731,11 +820,14 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
     <!-- Pricing -->
     <section id="pricing" class="py-20 bg-gradient-to-br from-theme-bg to-theme-bg/50">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-theme">
-          <span class="bg-gradient-to-r from-sky-400 to-indigo-600 bg-clip-text text-transparent">
-            Simple Pricing
-          </span>
-        </h2>
+        <div class="text-center mb-16">
+          <h2 class="relative inline-block text-4xl md:text-5xl font-bold leading-tight">
+            <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">Simple</span>
+            <span class="text-theme ml-3">Pricing</span>
+            <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"></span>
+          </h2>
+          <p class="mt-8 max-w-2xl mx-auto text-base md:text-lg text-theme-secondary/90 leading-relaxed">Clear, scalable plans—start free, upgrade only when the value is undeniable.</p>
+        </div>
         
         <div class="grid lg:grid-cols-3 gap-8">
           <div class="card p-8 hover-lift relative">
