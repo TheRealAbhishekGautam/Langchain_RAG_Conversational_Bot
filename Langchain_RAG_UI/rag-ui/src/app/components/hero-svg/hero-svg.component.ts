@@ -164,7 +164,7 @@ import { CommonModule } from '@angular/common';
             </path>
             
             <!-- Upload text with padding -->
-            <text x="0" y="18" text-anchor="middle" fill="white" class="text-xs font-medium">Upload</text>
+            <text x="0" y="12" text-anchor="middle" fill="white" class="text-xs font-medium">Upload</text>
           </g>
         </g>
         

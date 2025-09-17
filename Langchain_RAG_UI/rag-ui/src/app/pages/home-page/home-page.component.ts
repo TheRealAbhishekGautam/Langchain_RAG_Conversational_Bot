@@ -187,7 +187,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
       <div class="w-full px-4 py-16 sm:py-20 relative">
         <div class="max-w-7xl mx-auto">
           <!-- Main Content Area -->
-          <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
             <!-- Left Side - Text Content -->
             <div class="text-center lg:text-left">
               <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
@@ -216,7 +216,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
     </section>
 
     <!-- How It Works Section -->
-    <section class="w-full py-16 relative">
+    <section class="w-full py-5 relative">
       <div class="max-w-7xl mx-auto px-4">
         <!-- Section Header -->
         <div class="text-center mb-12">
@@ -249,86 +249,153 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
                 <rect width="100%" height="100%" fill="url(#grid)"/>
 
                 <!-- Document Upload (Top-Left) -->
-                <g class="document-upload" transform="translate(50, 60)">
+                <g class="document-upload" transform="translate(-80, 40)">
                   <rect x="50" y="0" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-sky-500" opacity="0.2">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="40" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">📄 Document Upload</text>
+                  <text x="150" y="25" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">Document Upload</text>
                   
-                  <!-- Upload Animation -->
+                  <!-- Enhanced Upload Animation -->
                   <g class="upload-animation">
-                    <path d="M120 70 L120 90 M115 75 L120 70 L125 75" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" stroke-linecap="round">
+                    <!-- Floating document icons above arrows -->
+                    <g class="floating-docs">
+                      <rect x="115" y="40" width="10" height="12" rx="1" fill="currentColor" class="text-red-400" opacity="0.7">
+                        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite"/>
+                        <animateTransform attributeName="transform" type="translate" values="0 3; 0 -2; 0 3" dur="3s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="145" y="42" width="10" height="12" rx="1" fill="currentColor" class="text-blue-400" opacity="0.6">
+                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3.5s" repeatCount="indefinite"/>
+                        <animateTransform attributeName="transform" type="translate" values="0 2; 0 -3; 0 2" dur="3.5s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="175" y="38" width="10" height="12" rx="1" fill="currentColor" class="text-green-400" opacity="0.8">
+                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2.8s" repeatCount="indefinite"/>
+                        <animateTransform attributeName="transform" type="translate" values="0 4; 0 -1; 0 4" dur="2.8s" repeatCount="indefinite"/>
+                      </rect>
+                    </g>
+                    
+                    <!-- Original upload arrows with enhanced effects -->
+                    <path d="M120 55 L120 75 M115 60 L120 55 L125 60" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" stroke-linecap="round">
                       <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
                       <animateTransform attributeName="transform" type="translate" values="0 5; 0 0; 0 5" dur="2s" repeatCount="indefinite"/>
                     </path>
-                    <path d="M150 70 L150 90 M145 75 L150 70 L155 75" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" stroke-linecap="round">
+                    <path d="M150 55 L150 75 M145 60 L150 55 L155 60" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" stroke-linecap="round">
                       <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="0.5s"/>
                       <animateTransform attributeName="transform" type="translate" values="0 5; 0 0; 0 5" dur="2s" repeatCount="indefinite" begin="0.5s"/>
                     </path>
-                    <path d="M180 70 L180 90 M175 75 L180 70 L185 75" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" stroke-linecap="round">
+                    <path d="M180 55 L180 75 M175 60 L180 55 L185 60" stroke="currentColor" class="text-sky-400" stroke-width="2" fill="none" stroke-linecap="round">
                       <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="1s"/>
                       <animateTransform attributeName="transform" type="translate" values="0 5; 0 0; 0 5" dur="2s" repeatCount="indefinite" begin="1s"/>
                     </path>
+                    
+                    <!-- Small processing particles -->
+                    <g class="upload-particles">
+                      <circle cx="120" cy="85" r="1" fill="currentColor" class="text-yellow-400" opacity="0.6">
+                        <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.5s" repeatCount="indefinite"/>
+                        <animate attributeName="r" values="0.5;1.5;0.5" dur="2.5s" repeatCount="indefinite"/>
+                      </circle>
+                      <circle cx="150" cy="87" r="1.2" fill="currentColor" class="text-orange-400" opacity="0.7">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="2.2s" repeatCount="indefinite"/>
+                        <animate attributeName="r" values="0.8;1.8;0.8" dur="2.2s" repeatCount="indefinite"/>
+                      </circle>
+                      <circle cx="180" cy="86" r="0.8" fill="currentColor" class="text-cyan-400" opacity="0.5">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.8s" repeatCount="indefinite"/>
+                        <animate attributeName="r" values="0.4;1.2;0.4" dur="2.8s" repeatCount="indefinite"/>
+                      </circle>
+                    </g>
                   </g>
 
-                  <text x="150" y="245" text-anchor="middle" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Processing documents...</text>
+                  <text x="150" y="105" text-anchor="middle" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Processing documents...</text>
                   
                   <!-- File Types -->
-                  <g class="file-types" transform="translate(80, 280)">
-                    <rect x="0" y="0" width="35" height="45" rx="4" fill="currentColor" class="text-red-400" opacity="0.7"/>
-                    <text x="17" y="30" text-anchor="middle" fill="#fff" class="text-xs font-bold">PDF</text>
+                  <g class="file-types" transform="translate(80, 140)">
+                    <rect x="0" y="0" width="35" height="25" rx="4" fill="currentColor" class="text-red-400" opacity="0.7"/>
+                    <text x="17" y="17" text-anchor="middle" fill="#fff" class="text-xs font-bold">PDF</text>
                     
-                    <rect x="45" y="0" width="35" height="45" rx="4" fill="currentColor" class="text-blue-400" opacity="0.7"/>
-                    <text x="62" y="25" text-anchor="middle" fill="#fff" class="text-xs font-bold">DOC</text>
-                    <text x="62" y="35" text-anchor="middle" fill="#fff" class="text-xs font-bold">X</text>
+                    <rect x="45" y="0" width="35" height="25" rx="4" fill="currentColor" class="text-blue-400" opacity="0.7"/>
+                    <text x="62" y="17" text-anchor="middle" fill="#fff" class="text-xs font-bold">DOCX</text>
                     
-                    <rect x="90" y="0" width="35" height="45" rx="4" fill="currentColor" class="text-green-400" opacity="0.7"/>
-                    <text x="107" y="30" text-anchor="middle" fill="#fff" class="text-xs font-bold">TXT</text>
+                    <rect x="90" y="0" width="35" height="25" rx="4" fill="currentColor" class="text-green-400" opacity="0.7"/>
+                    <text x="107" y="17" text-anchor="middle" fill="#fff" class="text-xs font-bold">TXT</text>
                   </g>
                 </g>
 
                 <!-- Vector Processing (Center-Left) -->
-                <g class="vector-processing" transform="translate(280, 180)">
+                <g class="vector-processing" transform="translate(200, 200)">
                   <rect x="50" y="-40" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-indigo-500" opacity="0.2">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="4s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="-0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">🧠 Vector Processing</text>
+                  <text x="150" y="-15" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">Vector Processing</text>
                   
-                  <!-- Vector visualization -->
-                  <g class="vectors" transform="translate(80, 20)">
-                    <g class="vector-grid">
-                      <circle cx="20" cy="0" r="3" fill="currentColor" class="text-purple-400" opacity="0.8">
-                        <animate attributeName="r" values="2;4;2" dur="3s" repeatCount="indefinite"/>
-                      </circle>
-                      <circle cx="60" cy="10" r="2.5" fill="currentColor" class="text-pink-400" opacity="0.7">
-                        <animate attributeName="r" values="1.5;3.5;1.5" dur="3.5s" repeatCount="indefinite"/>
-                      </circle>
-                      <circle cx="100" cy="5" r="3.5" fill="currentColor" class="text-indigo-400" opacity="0.9">
-                        <animate attributeName="r" values="2.5;4.5;2.5" dur="2.8s" repeatCount="indefinite"/>
-                      </circle>
-                      <circle cx="140" cy="15" r="2" fill="currentColor" class="text-violet-400" opacity="0.6">
-                        <animate attributeName="r" values="1;3;1" dur="4s" repeatCount="indefinite"/>
-                      </circle>
+                  <!-- Simplified Vector visualization -->
+                  <g class="vectors" transform="translate(85, 0)">
+                    <!-- Input text chunks -->
+                    <g class="input-chunks">
+                      <rect x="10" y="5" width="20" height="8" rx="2" fill="currentColor" class="text-blue-400" opacity="0.7">
+                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="10" y="18" width="20" height="8" rx="2" fill="currentColor" class="text-blue-400" opacity="0.6">
+                        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.8s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="10" y="31" width="20" height="8" rx="2" fill="currentColor" class="text-blue-400" opacity="0.8">
+                        <animate attributeName="opacity" values="0.6;1;0.6" dur="2.2s" repeatCount="indefinite"/>
+                      </rect>
                     </g>
+                    
+                    <!-- Processing arrows -->
+                    <g class="processing-flow" stroke="currentColor" class="text-indigo-400" stroke-width="1.5" fill="none">
+                      <path d="M35 9 L60 9 M55 6 L60 9 L55 12">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+                      </path>
+                      <path d="M35 22 L60 22 M55 19 L60 22 L55 25">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="2.3s" repeatCount="indefinite"/>
+                      </path>
+                      <path d="M35 35 L60 35 M55 32 L60 35 L55 38">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="2.7s" repeatCount="indefinite"/>
+                      </path>
+                    </g>
+                    
+                    <!-- Vector embeddings output -->
+                    <g class="vector-output">
+                      <rect x="70" y="12" width="40" height="6" rx="3" fill="currentColor" class="text-purple-500" opacity="0.8">
+                        <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+                        <animate attributeName="width" values="35;45;35" dur="3s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="70" y="22" width="40" height="6" rx="3" fill="currentColor" class="text-violet-500" opacity="0.7">
+                        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.5s" repeatCount="indefinite"/>
+                        <animate attributeName="width" values="38;42;38" dur="2.5s" repeatCount="indefinite"/>
+                      </rect>
+                      <rect x="70" y="32" width="40" height="6" rx="3" fill="currentColor" class="text-indigo-500" opacity="0.9">
+                        <animate attributeName="opacity" values="0.7;1;0.7" dur="2.8s" repeatCount="indefinite"/>
+                        <animate attributeName="width" values="36;44;36" dur="2.8s" repeatCount="indefinite"/>
+                      </rect>
+                    </g>
+                    
+                    <!-- Small processing indicator -->
+                    <circle cx="50" cy="22" r="3" fill="currentColor" class="text-emerald-400" opacity="0.6">
+                      <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+                    </circle>
                   </g>
+                  
+                  <text x="150" y="65" text-anchor="middle" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Creating embeddings...</text>
                 </g>
 
                 <!-- Query Processing (Top-Right) -->
-                <g class="query-processing" transform="translate(520, 80)">
+                <g class="query-processing" transform="translate(580, 80)">
                   <rect x="50" y="-40" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-emerald-500" opacity="0.2">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3.5s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">❓ Query Processing</text>
+                  <text x="150" y="-10" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">Query Processing</text>
                   
                   <!-- User Question -->
-                  <rect x="70" y="40" width="160" height="60" rx="30" fill="var(--primary)" opacity="0.8">
+                  <rect x="70" y="10" width="160" height="40" rx="20" fill="var(--primary)" opacity="0.8">
                     <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="65" text-anchor="middle" fill="#fff" class="text-xs">What are the key findings</text>
-                  <text x="150" y="80" text-anchor="middle" fill="#fff" class="text-xs">in the research paper?</text>
+                  <text x="150" y="28" text-anchor="middle" fill="#fff" class="text-xs">What are the key findings</text>
+                  <text x="150" y="39" text-anchor="middle" fill="#fff" class="text-xs">in the research paper?</text>
                   
                   <!-- Query Vectorization -->
-                  <g class="query-vectors" transform="translate(120, 120)">
+                  <g class="query-vectors" transform="translate(120, 65)">
                     <circle cx="0" cy="0" r="2" fill="currentColor" class="text-emerald-400" opacity="0.7">
                       <animate attributeName="r" values="1;3;1" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
@@ -342,73 +409,196 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
                 </g>
 
                 <!-- Similarity Search (Center) -->
-                <g class="similarity-search" transform="translate(400, 280)">
+                <g class="similarity-search" transform="translate(500, 340)">
                   <rect x="50" y="-40" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-orange-500" opacity="0.2">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3.2s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">🔍 Similarity Search</text>
+                  <text x="150" y="-15" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">Similarity Search</text>
                   
                   <!-- Search visualization -->
-                  <g class="search-viz" transform="translate(120, 40)">
-                    <circle cx="0" cy="0" r="25" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-400" opacity="0.5">
-                      <animate attributeName="r" values="20;30;20" dur="3s" repeatCount="indefinite"/>
+                  <g class="search-viz" transform="translate(150, 25)">
+                    <circle cx="0" cy="0" r="18" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-400" opacity="0.5">
+                      <animate attributeName="r" values="15;22;15" dur="3s" repeatCount="indefinite"/>
                       <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
                     </circle>
-                    <circle cx="0" cy="0" r="5" fill="currentColor" class="text-orange-500"/>
+                    <circle cx="0" cy="0" r="4" fill="currentColor" class="text-orange-500"/>
                     
                     <!-- Relevant documents found -->
                     <g class="found-docs">
-                      <rect x="-8" y="-40" width="16" height="20" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.8">
+                      <rect x="-6" y="-25" width="12" height="12" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.8">
                         <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
                       </rect>
-                      <rect x="25" y="-15" width="16" height="20" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.7">
+                      <rect x="15" y="-8" width="12" height="12" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.7">
                         <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite"/>
                       </rect>
-                      <rect x="-35" y="15" width="16" height="20" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.6">
+                      <rect x="-22" y="10" width="12" height="12" rx="2" fill="currentColor" class="text-yellow-400" opacity="0.6">
                         <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/>
                       </rect>
                     </g>
                   </g>
+                  
+                  <text x="150" y="65" text-anchor="middle" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Finding relevant content...</text>
                 </g>
 
                 <!-- Answer Generation (Bottom-Right) -->
-                <g class="answer-generation" transform="translate(750, 320)">
+                <g class="answer-generation" transform="translate(800, 410)">
                   <rect x="50" y="-40" width="200" height="120" rx="15" fill="var(--bg)" stroke="currentColor" stroke-width="2" class="text-purple-500" opacity="0.2">
                     <animate attributeName="opacity" values="0.1;0.3;0.1" dur="4.5s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="0" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">💡 Answer Generation</text>
+                  <text x="150" y="-15" text-anchor="middle" fill="currentColor" class="text-sm font-semibold text-theme">Answer Generation</text>
                   
                   <!-- Generated answer -->
-                  <rect x="70" y="40" width="160" height="80" rx="10" fill="var(--primary)" opacity="0.9">
+                  <rect x="70" y="-2" width="160" height="55" rx="10" fill="var(--primary)" opacity="0.9">
                     <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
                   </rect>
-                  <text x="150" y="65" text-anchor="middle" fill="#fff" class="text-xs">Based on the analysis of</text>
-                  <text x="150" y="80" text-anchor="middle" fill="#fff" class="text-xs">3 relevant documents,</text>
-                  <text x="150" y="95" text-anchor="middle" fill="#fff" class="text-xs">the key findings are...</text>
-                  <text x="150" y="110" text-anchor="middle" fill="#fff" class="text-xs font-bold">📎 With citations</text>
+                  <text x="150" y="18" text-anchor="middle" fill="#fff" class="text-xs">Based on the analysis of</text>
+                  <text x="150" y="29" text-anchor="middle" fill="#fff" class="text-xs">3 relevant documents,</text>
+                  <text x="150" y="41" text-anchor="middle" fill="#fff" class="text-xs">the key findings are...</text>
+                  
+                  <text x="150" y="70" text-anchor="middle" fill="currentColor" class="text-xs opacity-70 text-theme-muted">Generating response...</text>
                 </g>
 
-                <!-- Data Flow Arrows -->
-                <g class="data-flow">
+                <!-- Enhanced Data Flow with Particles (Hero Style) -->
+                <g class="data-flow" stroke-width="3" fill="none" opacity="0.8">
                   <!-- Upload to Vector Processing -->
-                  <path d="M300 140 Q340 160 380 180" stroke="currentColor" stroke-width="3" fill="none" class="text-sky-500" marker-end="url(#arrowhead)">
+                  <path d="M170 100 Q210 130 250 180" id="workflowPath1" stroke="var(--primary)" stroke-width="4" opacity="0.3">
                     <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite"/>
                   </path>
+                  <path d="M170 100 Q210 130 250 180" stroke="#0ea5e9" stroke-width="2">
+                    <animate attributeName="stroke-dasharray" values="0 80; 40 40; 80 0" dur="2.5s" repeatCount="indefinite"/>
+                  </path>
+                  
+                  <!-- Flowing particles for path 1 -->
+                  <circle r="4" fill="#0ea5e9" opacity="0.9">
+                    <animateMotion dur="3s" repeatCount="indefinite">
+                      <mpath href="#workflowPath1"/>
+                    </animateMotion>
+                    <animate attributeName="r" values="3;5;3" dur="1s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle r="2.5" fill="#38bdf8" opacity="0.7">
+                    <animateMotion dur="3s" repeatCount="indefinite" begin="1s">
+                      <mpath href="#workflowPath1"/>
+                    </animateMotion>
+                  </circle>
                   
                   <!-- Query to Similarity Search -->
-                  <path d="M620 160 Q620 200 600 240" stroke="currentColor" stroke-width="3" fill="none" class="text-emerald-500" marker-end="url(#arrowhead)">
+                  <path d="M680 160 Q640 220 650 300" id="workflowPath2" stroke="var(--primary)" stroke-width="4" opacity="0.3">
+                    <animate attributeName="stroke-dasharray" values="0 120; 60 60; 120 0" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+                  </path>
+                  <path d="M680 160 Q640 220 650 300" stroke="#10b981" stroke-width="2">
                     <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite" begin="1s"/>
                   </path>
                   
+                  <!-- Flowing particles for path 2 -->
+                  <circle r="3.5" fill="#10b981" opacity="0.9">
+                    <animateMotion dur="3.5s" repeatCount="indefinite" begin="0.5s">
+                      <mpath href="#workflowPath2"/>
+                    </animateMotion>
+                    <animate attributeName="r" values="2.5;4.5;2.5" dur="1.2s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle r="2" fill="#34d399" opacity="0.6">
+                    <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.5s">
+                      <mpath href="#workflowPath2"/>
+                    </animateMotion>
+                  </circle>
+                  
                   <!-- Vector Processing to Similarity Search -->
-                  <path d="M480 240 Q520 250 550 280" stroke="currentColor" stroke-width="3" fill="none" class="text-indigo-500" marker-end="url(#arrowhead)">
-                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                  <path d="M400 280 Q470 310 550 340" id="workflowPath3" stroke="var(--primary)" stroke-width="4" opacity="0.3">
+                    <animate attributeName="stroke-dasharray" values="0 90; 45 45; 90 0" dur="2.8s" repeatCount="indefinite" begin="0.3s"/>
+                  </path>
+                  <path d="M400 280 Q470 310 550 340" stroke="#6366f1" stroke-width="2">
+                    <animate attributeName="stroke-dasharray" values="0 80; 40 40; 80 0" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
                   </path>
                   
+                  <!-- Flowing particles for path 3 -->
+                  <circle r="3" fill="#6366f1" opacity="0.8">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" begin="0.3s">
+                      <mpath href="#workflowPath3"/>
+                    </animateMotion>
+                    <animate attributeName="r" values="2;4;2" dur="1.1s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle r="2.2" fill="#8b5cf6" opacity="0.6">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.3s">
+                      <mpath href="#workflowPath3"/>
+                    </animateMotion>
+                  </circle>
+                  
                   <!-- Similarity Search to Answer Generation -->
-                  <path d="M600 320 Q700 320 750 320" stroke="currentColor" stroke-width="3" fill="none" class="text-orange-500" marker-end="url(#arrowhead)">
-                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3s" repeatCount="indefinite" begin="2s"/>
+                  <path d="M750 380 Q800 380 850 410" id="workflowPath4" stroke="var(--primary)" stroke-width="4" opacity="0.3">
+                    <animate attributeName="stroke-dasharray" values="0 100; 50 50; 100 0" dur="3.2s" repeatCount="indefinite" begin="1.5s"/>
                   </path>
+                  <path d="M750 380 Q800 380 850 410" stroke="#f59e0b" stroke-width="2">
+                    <animate attributeName="stroke-dasharray" values="0 90; 45 45; 90 0" dur="2.8s" repeatCount="indefinite" begin="2s"/>
+                  </path>
+                  
+                  <!-- Flowing particles for path 4 -->
+                  <circle r="4.5" fill="#f59e0b" opacity="0.9">
+                    <animateMotion dur="3.2s" repeatCount="indefinite" begin="1.5s">
+                      <mpath href="#workflowPath4"/>
+                    </animateMotion>
+                    <animate attributeName="r" values="3.5;5.5;3.5" dur="1.3s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle r="2.8" fill="#fbbf24" opacity="0.7">
+                    <animateMotion dur="3.2s" repeatCount="indefinite" begin="2.5s">
+                      <mpath href="#workflowPath4"/>
+                    </animateMotion>
+                  </circle>
+                </g>
+                
+                <!-- Multi-layer Background Enhancement -->
+                <g class="background-layers" opacity="0.4">
+                  <!-- Floating Data Particles -->
+                  <g fill="var(--primary)" opacity="0.3">
+                    <circle cx="150" cy="80" r="3">
+                      <animate attributeName="cy" values="80;60;80" dur="6s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="400" cy="150" r="2.5">
+                      <animate attributeName="cx" values="400;420;400" dur="5s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="550" cy="120" r="2">
+                      <animate attributeName="r" values="1.5;3;1.5" dur="4s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.2;0.7;0.2" dur="5s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="180" cy="350" r="3.5">
+                      <animate attributeName="cy" values="350;330;350" dur="7s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="6s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="650" cy="280" r="2.2">
+                      <animate attributeName="cx" values="650;670;650" dur="8s" repeatCount="indefinite"/>
+                      <animate attributeName="r" values="1.8;2.8;1.8" dur="3.5s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+                  
+                  <!-- Connecting Energy Lines -->
+                  <g stroke="var(--primary)" stroke-width="1" fill="none" opacity="0.2">
+                    <line x1="100" y1="100" x2="200" y2="150">
+                      <animate attributeName="opacity" values="0.1;0.4;0.1" dur="4s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="500" y1="80" x2="600" y2="120">
+                      <animate attributeName="opacity" values="0.1;0.3;0.1" dur="5s" repeatCount="indefinite" begin="1s"/>
+                    </line>
+                    <line x1="300" y1="350" x2="450" y2="380">
+                      <animate attributeName="opacity" values="0.1;0.5;0.1" dur="6s" repeatCount="indefinite" begin="2s"/>
+                    </line>
+                  </g>
+                  
+                  <!-- Processing Indicators -->
+                  <g transform="translate(500, 200)">
+                    <circle cx="-30" cy="0" r="3" fill="#0ea5e9" opacity="0.0">
+                      <animate attributeName="opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite"/>
+                      <animate attributeName="r" values="2;5;2" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="0" cy="0" r="3" fill="#10b981" opacity="0.0">
+                      <animate attributeName="opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                      <animate attributeName="r" values="2;5;2" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                    </circle>
+                    <circle cx="30" cy="0" r="3" fill="#6366f1" opacity="0.0">
+                      <animate attributeName="opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite" begin="0.6s"/>
+                      <animate attributeName="r" values="2;5;2" dur="1.5s" repeatCount="indefinite" begin="0.6s"/>
+                    </circle>
+                  </g>
                 </g>
             </svg>
           </div>
