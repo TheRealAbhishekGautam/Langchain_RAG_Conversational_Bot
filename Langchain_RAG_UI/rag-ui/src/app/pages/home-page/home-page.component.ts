@@ -108,48 +108,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
   `],
   template: `
   <div class="min-h-screen gradient-animated">
-    <!-- Nav -->
-  <header class="sticky top-2 z-30 bg-transparent backdrop-blur-sm">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-6">
-        <div class="flex items-center gap-3 group">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-600 text-white shadow-md ring-1 ring-white/10">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:scale-110"><path d="M12 2l3.5 7H22l-5.5 4 2 8L12 17l-6.5 4 2-8L2 9h6.5L12 2z" fill="currentColor"/></svg>
-          </span>
-          <div class="flex flex-col -space-y-0.5">
-            <span class="font-semibold tracking-tight bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              Ask The Document
-            </span>
-            <span class="text-[10px] uppercase tracking-wider text-theme-secondary/60">Conversational RAG</span>
-          </div>
-        </div>
-        <nav class="hidden sm:flex items-center gap-1 text-sm font-medium">
-          <a routerLink="/" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">
-            <span>Home</span>
-            <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span>
-          </a>
-          <a href="#features" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">
-            <span>Features</span>
-            <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span>
-          </a>
-          <a href="#pricing" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">
-            <span>Pricing</span>
-            <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span>
-          </a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <button
-            class="btn btn-outline text-base h-10 px-4"
-            (click)="toggleTheme()"
-            [attr.aria-label]="theme.theme()==='dark' ? 'Switch to light mode' : 'Switch to dark mode'"
-            [title]="theme.theme()==='dark' ? 'Light mode' : 'Dark mode'"
-          >
-            {{ theme.theme()==='dark' ? '☀️' : '🌙' }}
-          </button>
-            <a routerLink="/login" class="btn btn-outline text-xs h-10 px-5">Sign in</a>
-            <a routerLink="/register" class="btn btn-primary text-xs h-10 px-5 hover-scale">Get started</a>
-        </div>
-      </div>
-    </header>
+    <!-- Global top bar now injected at root; removed duplicate local header -->
 
     <!-- Hero -->
     <section class="relative overflow-hidden">
@@ -198,8 +157,8 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
       </div>
 
       <!-- Enhanced Full-Width Hero Layout -->
-      <div class="w-full px-4 py-16 sm:py-20 relative">
-        <div class="max-w-7xl mx-auto">
+      <div class="w-full py-16 sm:py-20 relative">
+        <div class="max-w-7xl mx-auto px-4">
           <!-- Main Content Area -->
           <div class="grid lg:grid-cols-2 gap-12 items-center">
             <!-- Left Side - Text Content -->
@@ -721,7 +680,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
 
     <!-- Features Section -->
   <section id="features" class="py-14 md:py-12 bg-gradient-to-br from-theme-bg to-theme-bg/50">
-      <div class="max-w-6xl mx-auto px-4">
+  <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
           <h2 class="relative inline-block text-4xl md:text-5xl font-bold leading-tight">
             <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">Powerful</span>
@@ -818,7 +777,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
 
     <!-- Testimonials -->
     <section class="py-20 gradient-animated">
-      <div class="max-w-6xl mx-auto px-4">
+  <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
           <h2 class="relative inline-block text-4xl md:text-5xl font-bold leading-tight">
             <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">What Our</span>
@@ -847,7 +806,7 @@ import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
 
     <!-- Pricing -->
     <section id="pricing" class="py-20 bg-gradient-to-br from-theme-bg to-theme-bg/50">
-      <div class="max-w-6xl mx-auto px-4">
+  <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
           <h2 class="relative inline-block text-4xl md:text-5xl font-bold leading-tight">
             <span class="bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">Simple</span>

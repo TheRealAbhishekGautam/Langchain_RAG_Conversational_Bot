@@ -18,12 +18,6 @@ import { AuthService } from '../../services/auth.service';
         (selectSession)="goToSession($event)"
       ></app-sidebar>
       <main class="flex-1 h-full overflow-hidden relative">
-        <header class="absolute top-0 right-0 p-3 z-10">
-          <div class="flex items-center gap-3">
-            <span class="text-sm text-theme-secondary" *ngIf="auth.user()">Hello, {{ auth.user()!.username }}</span>
-            <button class="btn btn-outline text-xs" (click)="logout()">Logout</button>
-          </div>
-        </header>
         <router-outlet></router-outlet>
       </main>
     </div>
