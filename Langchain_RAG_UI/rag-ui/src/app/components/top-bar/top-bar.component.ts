@@ -30,7 +30,7 @@ import { AuthService } from '../../services/auth.service';
 
       <!-- Nav -->
       <nav class="hidden md:flex items-center gap-1 text-sm font-medium h-full">
-        <a routerLink="/" routerLinkActive="text-theme" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">Home <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span></a>
+        <a [routerLink]="['/']" routerLinkActive="text-theme" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">Home <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span></a>
         <a href="/" fragment="features" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">Features <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span></a>
         <a href="/" fragment="pricing" class="relative px-4 py-2 rounded-md text-theme-secondary/80 hover:text-theme transition-colors group">Pricing <span class="pointer-events-none absolute inset-x-2 -bottom-px h-px bg-gradient-to-r from-transparent via-sky-500/0 to-transparent opacity-0 group-hover:opacity-70 transition-opacity"></span></a>
       </nav>
@@ -41,9 +41,8 @@ import { AuthService } from '../../services/auth.service';
           {{ theme.theme()==='dark' ? '☀️' : '🌙' }}
         </button>
         <ng-container *ngIf="auth.user(); else guestLinks">
-          <span class="hidden sm:inline text-xs text-theme-secondary">Hi, {{ auth.user()!.username }}</span>
+          <a routerLink="/conversation" class="btn btn-outline text-xs h-9 px-4">Conversations</a>
           <a routerLink="/documents" class="btn btn-outline text-xs h-9 px-4">Documents</a>
-          <a routerLink="/conversation" class="btn btn-outline text-xs h-9 px-4">Chat</a>
           <button class="btn btn-primary text-xs h-9 px-4" (click)="logout()">Logout</button>
         </ng-container>
         <ng-template #guestLinks>

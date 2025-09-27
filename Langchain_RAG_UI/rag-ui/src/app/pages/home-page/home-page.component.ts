@@ -958,12 +958,7 @@ export class HomePageComponent {
     { q: 'What happens to my documents?', a: 'Documents are stored securely and can be deleted anytime. We use them only to answer your questions.' }
   ];
 
-  constructor(public theme: ThemeService, private auth: AuthService, private router: Router) {
-    // Redirect authenticated users to conversation page
-    if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/conversation']);
-    }
-  }
+  constructor(public theme: ThemeService, private auth: AuthService, private router: Router) {}
   
   toggleTheme(){ this.theme.toggle(); }
   
