@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AuthIllustrationComponent } from '../../components/auth-illustration/auth-illustration.component';
 
@@ -11,7 +11,7 @@ import { AuthIllustrationComponent } from '../../components/auth-illustration/au
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, AuthIllustrationComponent],
+  imports: [CommonModule, FormsModule, AuthIllustrationComponent, RouterModule],
   template: `
   <div class="min-h-screen w-full flex flex-col lg:flex-row overflow-hidden login-bg relative contrast-scope -mt-20">
     <!-- Left Visual / Branding Panel -->
@@ -133,16 +133,37 @@ export class LoginPageComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   submit() {
-    if (!this.username || !this.password) return;
+    if (!this.username || !this.password) {
+      this.error.set('Please fill in all required fields');
+      return;
+    }
+    
+    if (this.username.length < 3) {
+      this.error.set('Username must be at least 3 characters long');
+      return;
+    }
+    
+    if (this.password.length < 6) {
+      this.error.set('Password must be at least 6 characters long');
+      return;
+    }
+    
     this.loading.set(true);
     this.error.set(null);
+    
     this.auth.login({ username: this.username, password: this.password }, this.remember).subscribe({
       next: (res) => {
-        if (res.success) this.router.navigate(['/conversation']);
-        else this.error.set(res.message || 'Login failed');
+        if (res.success) {
+          this.router.navigate(['/conversation']);
+        } else {
+          this.error.set(res.message || 'Login failed');
+        }
         this.loading.set(false);
       },
-      error: (e) => { this.error.set(e.error?.detail || 'Login failed'); this.loading.set(false); }
+      error: (e) => { 
+        this.error.set(e.error?.detail || e.error?.message || 'Login failed'); 
+        this.loading.set(false); 
+      }
     });
   }
 }

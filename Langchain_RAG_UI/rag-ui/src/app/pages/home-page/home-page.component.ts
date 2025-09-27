@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
 import { HeroSvgComponent } from '../../components/hero-svg/hero-svg.component';
 
@@ -957,7 +958,12 @@ export class HomePageComponent {
     { q: 'What happens to my documents?', a: 'Documents are stored securely and can be deleted anytime. We use them only to answer your questions.' }
   ];
 
-  constructor(public theme: ThemeService) {}
+  constructor(public theme: ThemeService, private auth: AuthService, private router: Router) {
+    // Redirect authenticated users to conversation page
+    if (this.auth.isAuthenticated()) {
+      this.router.navigate(['/conversation']);
+    }
+  }
   
   toggleTheme(){ this.theme.toggle(); }
   

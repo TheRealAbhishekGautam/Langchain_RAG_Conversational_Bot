@@ -1,14 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AuthIllustrationComponent } from '../../components/auth-illustration/auth-illustration.component';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, AuthIllustrationComponent],
+  imports: [CommonModule, FormsModule, AuthIllustrationComponent, RouterModule],
   template: `
   <div class="min-h-screen w-full flex flex-col lg:flex-row overflow-hidden login-bg relative contrast-scope -mt-20">
     <!-- Left Visual Panel (shared) -->
@@ -115,21 +115,44 @@ export class RegisterPageComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   submit() {
-    if (!this.username || !this.email || !this.password) return;
+    if (!this.username || !this.email || !this.password) {
+      this.error.set('Please fill in all required fields');
+      return;
+    }
+    
+    if (this.username.length < 3) {
+      this.error.set('Username must be at least 3 characters long');
+      return;
+    }
+    
+    if (!this.email.includes('@') || !this.email.includes('.')) {
+      this.error.set('Please enter a valid email address');
+      return;
+    }
+    
+    if (this.password.length < 8) {
+      this.error.set('Password must be at least 8 characters long');
+      return;
+    }
+    
     this.loading.set(true);
     this.error.set(null);
     this.success.set(null);
+    
     this.auth.register({ username: this.username, email: this.email, password: this.password }).subscribe({
       next: (res) => {
         if (res.success) {
           this.success.set('Registration successful. You can now sign in.');
-          setTimeout(() => this.router.navigate(['/login']), 800);
+          setTimeout(() => this.router.navigate(['/login']), 1500);
         } else {
           this.error.set(res.message || 'Registration failed');
         }
         this.loading.set(false);
       },
-      error: (e) => { this.error.set(e.error?.detail || 'Registration failed'); this.loading.set(false); }
+      error: (e) => { 
+        this.error.set(e.error?.detail || e.error?.message || 'Registration failed'); 
+        this.loading.set(false); 
+      }
     });
   }
 }

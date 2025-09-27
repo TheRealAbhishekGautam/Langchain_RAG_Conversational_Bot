@@ -1,12 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   template: `
   <div class="min-h-screen grid place-items-center px-4">
     <div class="w-full max-w-md">
@@ -22,6 +23,9 @@ import { AuthService } from '../../services/auth.service';
           <p class="text-xs text-emerald-400" *ngIf="success()">{{ success() }}</p>
           <p class="text-xs text-red-400" *ngIf="error()">{{ error() }}</p>
         </form>
+        <div class="mt-6 text-center">
+          <a routerLink="/login" class="text-xs text-blue-400 hover:text-blue-300">Back to login</a>
+        </div>
       </div>
     </div>
   </div>
@@ -36,7 +40,16 @@ export class ForgotPasswordComponent {
   constructor(private auth: AuthService) {}
 
   submit() {
-    if (!this.email) return;
+    if (!this.email) {
+      this.error.set('Please enter your email address');
+      return;
+    }
+    
+    if (!this.email.includes('@') || !this.email.includes('.')) {
+      this.error.set('Please enter a valid email address');
+      return;
+    }
+    
     this.loading.set(true);
     this.success.set(null);
     this.error.set(null);
@@ -51,7 +64,7 @@ export class ForgotPasswordComponent {
         this.loading.set(false);
       },
       error: (e) => {
-        this.error.set(e.error?.detail || 'Failed to send reset email');
+        this.error.set(e.error?.detail || e.error?.message || 'Failed to send reset email');
         this.loading.set(false);
       }
     });

@@ -6,14 +6,15 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PrivateLayoutComponent } from './layouts/private-layout/private-layout.component';
 import { authGuard } from './guards/auth.guard';
+import { guestGuard } from './guards/guest.guard';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 export const APP_ROUTES: Routes = [
   // Public routes
   { path: '', pathMatch: 'full', component: HomePageComponent },
-  { path: 'login', component: LoginPageComponent },
-  { path: 'register', component: RegisterPageComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'login', component: LoginPageComponent, canMatch: [guestGuard] },
+  { path: 'register', component: RegisterPageComponent, canMatch: [guestGuard] },
+  { path: 'forgot-password', component: ForgotPasswordComponent, canMatch: [guestGuard] },
 
   // Protected routes
   {

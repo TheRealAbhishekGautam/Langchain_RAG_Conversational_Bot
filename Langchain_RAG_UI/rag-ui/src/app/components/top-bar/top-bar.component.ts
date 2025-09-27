@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -56,7 +56,10 @@ import { AuthService } from '../../services/auth.service';
   `
 })
 export class TopBarComponent {
-  constructor(public theme: ThemeService, public auth: AuthService) {}
+  constructor(public theme: ThemeService, public auth: AuthService, private router: Router) {}
 
-  logout() { this.auth.logout(); }
+  logout() { 
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
 }
