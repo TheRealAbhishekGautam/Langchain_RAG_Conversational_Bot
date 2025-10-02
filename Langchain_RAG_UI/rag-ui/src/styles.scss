@@ -16,6 +16,10 @@ html, body { height: 100%; }
   --border: #e2e8f0;
   --primary: #2563eb;
   --primary-hover: #3b82f6;
+  /* Additional accents for richer UI surfaces */
+  --accent-1: #2563eb; /* blue */
+  --accent-2: #8b5cf6; /* violet */
+  --accent-3: #ec4899; /* pink */
   --card-bg: rgba(255,255,255,0.95);
   --glass-bg: rgba(255,255,255,0.9);
   --danger: #dc2626;
@@ -36,6 +40,9 @@ html, body { height: 100%; }
   --border: #1e293b;
   --primary: #068dff;
   --primary-hover: #1a96ff;
+  --accent-1: #1a96ff; /* blue */
+  --accent-2: #a78bfa; /* violet */
+  --accent-3: #f472b6; /* pink */
   --card-bg: rgba(15,23,42,0.8);
   --glass-bg: rgba(255,255,255,0.05);
   --danger: #ef4444;
