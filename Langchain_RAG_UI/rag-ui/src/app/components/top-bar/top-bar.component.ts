@@ -13,6 +13,27 @@ import { AuthService } from '../../services/auth.service';
     header.top-bar { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
     /* No pseudo-element / overlay: completely transparent */
     .brand-gradient { font-weight:600; background:linear-gradient(to right,#38bdf8,#818cf8,#a855f7); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-.015em; }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      transition: background-color .2s ease, border-color .2s ease, transform .15s ease;
+    }
+    .theme-toggle:hover { background: var(--bg-secondary); border-color: var(--primary); color: var(--primary); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary), transparent 75%); }
+
+    .theme-icon { position: absolute; width: 18px; height: 18px; transition: opacity .25s ease, transform .35s ease; }
+    .icon-hidden { opacity: 0; transform: scale(0.8) rotate(-15deg); pointer-events: none; }
+    .icon-visible { opacity: 1; transform: scale(1) rotate(0); }
   `],
   template: `
   <header class="top-bar sticky top-0 z-30 bg-transparent backdrop-blur-xl h-20">
@@ -37,8 +58,16 @@ import { AuthService } from '../../services/auth.service';
 
       <!-- Right Actions -->
       <div class="flex items-center gap-2">
-        <button class="btn btn-outline text-xs h-9 px-3" (click)="theme.toggle()" [attr.aria-label]="theme.theme()==='dark' ? 'Switch to light mode' : 'Switch to dark mode'">
-          {{ theme.theme()==='dark' ? '☀️' : '🌙' }}
+        <button class="theme-toggle" (click)="theme.toggle()" [attr.aria-label]="theme.theme()==='dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+          <!-- Sun Icon -->
+          <svg class="theme-icon" [class.icon-visible]="theme.theme()==='light'" [class.icon-hidden]="theme.theme()==='dark'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <!-- Moon Icon -->
+          <svg class="theme-icon" [class.icon-visible]="theme.theme()==='dark'" [class.icon-hidden]="theme.theme()==='light'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
         </button>
         <ng-container *ngIf="auth.user(); else guestLinks">
           <a routerLink="/conversation" class="btn btn-outline text-xs h-9 px-4">Conversations</a>
