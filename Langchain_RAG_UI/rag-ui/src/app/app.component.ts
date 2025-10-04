@@ -11,13 +11,15 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden;
+      /* Prevent horizontal scroll bleed while allowing inner content to manage vertical scrolling */
+      overflow-x: hidden;
     }
     
     .main-content {
       flex: 1;
       min-height: 0;
-      overflow: hidden;
+      /* Make the main area scrollable (restores scrollbar on Home and other long pages) */
+      overflow-y: auto;
     }
   `],
   template: `
