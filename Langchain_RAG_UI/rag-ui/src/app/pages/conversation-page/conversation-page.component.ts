@@ -10,10 +10,53 @@ import { Session, ChatMessage } from '../../types/models';
   selector: 'app-conversation-page',
   standalone: true,
   imports: [CommonModule, FormsModule],
+  styles: [`
+    .conversation-container {
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .messages-area {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      scrollbar-width: thin;
+    }
+    
+    .messages-area::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .messages-area::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .messages-area::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 9999px;
+    }
+    
+    .messages-area::-webkit-scrollbar-thumb:hover {
+      background: color-mix(in oklab, var(--border), white 10%);
+    }
+    
+    .input-area {
+      flex-shrink: 0;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `],
   template: `
-  <div class="flex flex-col h-full">
-    <div class="flex-1 overflow-auto p-8 space-y-6" #scrollContainer>
-  <div *ngIf="messages().length === 0" class="h-full flex items-center justify-center text-center text-theme-muted">
+  <div class="conversation-container flex flex-col">
+    <div class="messages-area p-8 space-y-6" #scrollContainer>
+      <div *ngIf="messages().length === 0" class="h-full flex items-center justify-center text-center text-theme-muted">
         <div>
           <h2 class="text-xl font-semibold mb-2">Ask anything about your documents</h2>
           <p class="text-sm">Upload documents in the Documents section and start a conversation.</p>
@@ -37,7 +80,7 @@ import { Session, ChatMessage } from '../../types/models';
       </div>
     </div>
 
-  <form (ngSubmit)="send()" class="p-4 border-t border-theme bg-theme/80 backdrop-blur">
+    <form (ngSubmit)="send()" class="input-area p-4 border-t border-theme bg-theme/80 backdrop-blur">
       <div class="max-w-4xl mx-auto flex gap-3">
         <textarea [(ngModel)]="question" name="question" rows="1" required
           placeholder="Ask a question..." class="input resize-none flex-1"></textarea>

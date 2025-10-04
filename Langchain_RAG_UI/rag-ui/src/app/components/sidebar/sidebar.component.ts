@@ -181,43 +181,60 @@ dayjs.extend(relativeTime);
       </app-orbital-system>
         
     </div>
-    <!-- Header -->
-    <div class="p-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="inline-flex items-center justify-center w-7 h-7 rounded-md badge-grad text-white ring-1 ring-white/10">
-          <!-- Chat bubble icon -->
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-3H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" fill="currentColor"/>
-          </svg>
-        </span>
-        <h2 class="text-sm font-semibold tracking-tight">Sessions</h2>
-      </div>
-      <button class="btn btn-primary text-[11px] h-8 px-3" (click)="startNew()">New</button>
-    </div>
-
-    <!-- Search -->
-    <div class="px-3 pt-3">
-      <div class="relative">
-        <input [(ngModel)]="query" type="text" placeholder="Search sessions" class="input h-9 w-full" [style.paddingLeft.px]="40"/>
-        <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-theme-secondary/70 z-10" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-3.5-3.5"/></svg>
-      </div>
-    </div>
-
-    <!-- List -->
-    <div class="p-3 pt-2 flex-1 overflow-auto scroll-area">
-      <p class="text-[11px] uppercase tracking-wide text-theme-muted mb-2">Recent</p>
-      <div class="space-y-1">
-        <button *ngFor="let s of filteredSessions()" (click)="selectSession.emit(s.id)"
-          class="group w-full text-left px-3 py-2.5 rounded-lg text-sm transition flex items-start gap-3 item-hover">
-          <span class="w-6 h-6 rounded-md bg-theme-secondary/60 flex items-center justify-center text-[11px]">💬</span>
-          <span class="flex-1 min-w-0">
-            <span class="block font-medium truncate text-theme">{{ s.title || 'Untitled session' }}</span>
-            <span class="block text-[10px] text-theme-muted">{{ formatTs(s.updatedAt) }}</span>
+    
+    <!-- Fixed Top Section -->
+    <div class="flex-shrink-0 space-y-3 pt-2">
+      <!-- Header -->
+      <div class="px-4 pt-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-md badge-grad text-white ring-1 ring-white/10">
+            <!-- Chat bubble icon -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-3H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" fill="currentColor"/>
+            </svg>
           </span>
-        </button>
-        <p *ngIf="filteredSessions().length === 0" class="text-xs text-slate-500">No sessions yet</p>
+          <h2 class="text-sm font-semibold tracking-tight">Sessions</h2>
+        </div>
+        <button class="btn btn-primary text-[11px] h-8 px-3" (click)="startNew()">New</button>
+      </div>
+
+      <!-- Search -->
+      <div class="p-4 pt-2">
+        <div class="relative">
+          <input [(ngModel)]="query" type="text" placeholder="Search sessions" class="input h-9 w-full" [style.paddingLeft.px]="40"/>
+          <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-theme-secondary/70 z-10" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-3.5-3.5"/></svg>
+        </div>
       </div>
     </div>
+
+    <!-- Scrollable Middle Section -->
+    <div class="flex-1 min-h-0 overflow-hidden">
+      <div class="h-full overflow-y-auto scroll-area">
+        <div class="px-4 pb-6">
+          <div class="mb-3">
+            <p class="text-[11px] uppercase tracking-wide text-theme-muted mb-3">Recent</p>
+          </div>
+          <div class="space-y-3">
+            <button *ngFor="let s of filteredSessions()" (click)="selectSession.emit(s.id)"
+              class="group w-full text-left px-3 py-3 rounded-lg text-sm transition flex items-start gap-3 item-hover">
+              <span class="w-6 h-6 rounded-md bg-theme-secondary/60 flex items-center justify-center text-[11px] mt-0.5">💬</span>
+              <span class="flex-1 min-w-0">
+                <span class="block font-medium truncate text-theme leading-5">{{ s.title || 'Untitled session' }}</span>
+                <span class="block text-[10px] text-theme-muted mt-1">{{ formatTs(s.updatedAt) }}</span>
+              </span>
+            </button>
+            <div *ngIf="filteredSessions().length === 0" class="px-3 py-8 text-center">
+              <p class="text-xs text-slate-500">No sessions yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Bottom Section (for future use) -->
+    <!-- <div class="flex-shrink-0 p-3 border-t border-theme/20">
+      Bottom content here if needed
+    </div> -->
   </aside>
   `
 })

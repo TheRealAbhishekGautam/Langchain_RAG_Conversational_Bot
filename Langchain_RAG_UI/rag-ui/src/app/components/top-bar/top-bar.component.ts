@@ -15,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
     .brand-gradient { font-weight:600; background:linear-gradient(to right,#38bdf8,#818cf8,#a855f7); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-.015em; }
   `],
   template: `
-  <header class="top-bar sticky top-0 z-40 bg-transparent backdrop-blur-xl h-20">
+  <header class="top-bar sticky top-0 z-30 bg-transparent backdrop-blur-xl h-20">
     <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between gap-4">
       <!-- Brand -->
       <a routerLink="/" class="flex items-center gap-3 group select-none">

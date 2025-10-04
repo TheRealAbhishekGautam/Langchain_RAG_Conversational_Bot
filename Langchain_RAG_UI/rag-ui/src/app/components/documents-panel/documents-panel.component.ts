@@ -177,41 +177,57 @@ import { OrbitalSystemComponent } from '../shared/orbital-system.component';
       </app-orbital-system>
     </div>
     
-    <!-- Header -->
-    <div class="p-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="inline-flex items-center justify-center w-7 h-7 rounded-md badge-grad text-white ring-1 ring-white/10">📄</span>
-        <h2 class="text-sm font-semibold tracking-tight">Documents</h2>
-      </div>
-      <a routerLink="/documents" class="btn btn-outline text-[11px] h-8 px-2">Manage</a>
-    </div>
-
-    <!-- Search -->
-    <div class="px-3 pt-3">
-      <div class="relative">
-        <input [(ngModel)]="query" type="text" placeholder="Search documents" class="input h-9 w-full" [style.paddingLeft.px]="40"/>
-        <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-theme-secondary/70 z-10" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-3.5-3.5"/></svg>
-      </div>
-    </div>
-
-    <!-- List -->
-    <div class="p-3 pt-2 flex-1 overflow-auto scroll-area">
-      <p class="text-[11px] uppercase tracking-wide text-theme-muted mb-2">Your Files</p>
-      <div class="space-y-1">
-        <div *ngFor="let doc of filteredDocuments" class="group px-3 py-2.5 rounded-lg text-sm transition flex items-center gap-3 doc-item">
-          <span class="w-6 h-6 rounded-md bg-theme-secondary/60 flex items-center justify-center text-[11px]">{{ fileEmoji(doc.filename) }}</span>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-2 min-w-0">
-              <span class="truncate text-theme">{{ doc.filename }}</span>
-              <span *ngIf="doc.pages" class="text-[10px] text-theme-muted shrink-0">• {{ doc.pages }}p</span>
-            </div>
-            <span *ngIf="doc.uploadedAt" class="block text-[10px] text-theme-muted">{{ doc.uploadedAt | date:'mediumDate' }}</span>
-          </div>
-          <span *ngIf="doc.size" class="text-[10px] text-theme-muted shrink-0">{{ doc.size }}</span>
+    <!-- Fixed Top Section -->
+    <div class="flex-shrink-0 space-y-3 pt-2">
+      <!-- Header -->
+      <div class="px-4 pt-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-md badge-grad text-white ring-1 ring-white/10">📄</span>
+          <h2 class="text-sm font-semibold tracking-tight">Documents</h2>
         </div>
-        <p *ngIf="filteredDocuments.length === 0" class="text-xs text-slate-500">No documents found</p>
+        <a routerLink="/documents" class="btn btn-outline text-[11px] h-8 px-2">Manage</a>
+      </div>
+
+      <!-- Search -->
+      <div class="p-4 pt-2">
+        <div class="relative">
+          <input [(ngModel)]="query" type="text" placeholder="Search documents" class="input h-9 w-full" [style.paddingLeft.px]="40"/>
+          <svg aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-theme-secondary/70 z-10" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-3.5-3.5"/></svg>
+        </div>
       </div>
     </div>
+
+    <!-- Scrollable Middle Section -->
+    <div class="flex-1 min-h-0 overflow-hidden">
+      <div class="h-full overflow-y-auto scroll-area">
+        <div class="px-4 pb-6">
+          <div class="mb-3">
+            <p class="text-[11px] uppercase tracking-wide text-theme-muted mb-3">Your Files</p>
+          </div>
+          <div class="space-y-3">
+            <div *ngFor="let doc of filteredDocuments" class="group px-3 py-3 rounded-lg text-sm transition flex items-center gap-3 doc-item">
+              <span class="w-6 h-6 rounded-md bg-theme-secondary/60 flex items-center justify-center text-[11px] shrink-0">{{ fileEmoji(doc.filename) }}</span>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2 min-w-0 mb-1">
+                  <span class="truncate text-theme font-medium leading-5">{{ doc.filename }}</span>
+                  <span *ngIf="doc.pages" class="text-[10px] text-theme-muted shrink-0">• {{ doc.pages }}p</span>
+                </div>
+                <span *ngIf="doc.uploadedAt" class="block text-[10px] text-theme-muted">{{ doc.uploadedAt | date:'mediumDate' }}</span>
+              </div>
+              <span *ngIf="doc.size" class="text-[10px] text-theme-muted shrink-0">{{ doc.size }}</span>
+            </div>
+            <div *ngIf="filteredDocuments.length === 0" class="px-3 py-8 text-center">
+              <p class="text-xs text-slate-500">No documents found</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Bottom Section (for future use) -->
+    <!-- <div class="flex-shrink-0 p-3 border-t border-theme/20">
+      Bottom content here if needed
+    </div> -->
   </aside>
   `
 })
