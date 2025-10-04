@@ -10,7 +10,11 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, RouterModule],
   styles: [`
     :host { display:block; }
-    header.top-bar { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    header.top-bar {
+      background: transparent; /* fully transparent, adapts to underlying page */
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+    }
     /* No pseudo-element / overlay: completely transparent */
     .brand-gradient { font-weight:600; background:linear-gradient(to right,#38bdf8,#818cf8,#a855f7); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-.015em; }
 
@@ -36,7 +40,7 @@ import { AuthService } from '../../services/auth.service';
     .icon-visible { opacity: 1; transform: scale(1) rotate(0); }
   `],
   template: `
-  <header class="top-bar sticky top-0 z-30 bg-transparent backdrop-blur-xl h-20">
+  <header class="top-bar sticky top-0 z-30 bg-transparent h-20">
     <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between gap-4">
       <!-- Brand -->
       <a routerLink="/" class="flex items-center gap-3 group select-none">
