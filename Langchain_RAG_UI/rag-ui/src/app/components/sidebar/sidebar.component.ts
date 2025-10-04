@@ -14,6 +14,18 @@ dayjs.extend(relativeTime);
   imports: [CommonModule, RouterModule, FormsModule, OrbitalSystemComponent],
   styles: [`
     :host { display:block; }
+    /* Ensure the whole sidebar composites as a single layer and transitions consistently */
+    .sidebar-root {
+      overflow: hidden;                 /* clip children during width/transform animations */
+      contain: layout paint;            /* isolate layout/paint to avoid reflow jitter */
+      will-change: width, transform;    /* hint compositor */
+      transform: translateZ(0);         /* promote to its own layer */
+      backface-visibility: hidden;
+      transition: width var(--sidebar-speed, 280ms) cubic-bezier(0.22, 1, 0.36, 1),
+                  transform var(--sidebar-speed, 280ms) cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* Make direct children follow the same timing to avoid perceived desync */
+    .sidebar-root > * { transition: inherit; }
     .scroll-area { scrollbar-width: thin; }
     .scroll-area::-webkit-scrollbar { width: 8px; }
     .scroll-area::-webkit-scrollbar-track { background: transparent; }
@@ -145,7 +157,7 @@ dayjs.extend(relativeTime);
     }
   `],
   template: `
-  <aside class="h-full flex flex-col sidebar-surface surface-intense">
+  <aside class="h-full flex flex-col sidebar-surface surface-intense sidebar-root">
     <!-- Decorative centered SVG overlay -->
     <div class="panel-illustration" aria-hidden="true">
       <div class="svg-radial-bg" aria-hidden="true"></div>
@@ -185,7 +197,7 @@ dayjs.extend(relativeTime);
     <!-- Fixed Top Section -->
     <div class="flex-shrink-0 space-y-3 pt-2">
       <!-- Header -->
-      <div class="px-4 pt-4 flex items-center justify-between">
+      <div class="px-4 pt-4 flex items-center justify-between sidebar-header">
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center justify-center w-7 h-7 rounded-md badge-grad text-white ring-1 ring-white/10">
             <!-- Chat bubble icon -->

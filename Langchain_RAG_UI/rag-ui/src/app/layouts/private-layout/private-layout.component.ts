@@ -13,14 +13,14 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, RouterOutlet, SidebarComponent, DocumentsPanelComponent],
   styles: [`
     .panel-transition {
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: width, min-width;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
     }
     
     .collapse-button {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) translateX(var(--x-offset, 0)) scale(var(--scale, 1));
       width: 32px;
       height: 64px;
       background: var(--bg-elev);
@@ -29,15 +29,16 @@ import { AuthService } from '../../services/auth.service';
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), right 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       backdrop-filter: blur(8px);
       outline: none;
+      will-change: transform;
     }
     
     .collapse-button-fixed {
       position: fixed;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) translateX(var(--x-offset, 0)) scale(var(--scale, 1));
       width: 32px;
       height: 64px;
       background: var(--bg-elev);
@@ -46,10 +47,10 @@ import { AuthService } from '../../services/auth.service';
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), right 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       backdrop-filter: blur(8px);
       outline: none;
-      will-change: left, right;
+      will-change: transform;
     }
 
 
@@ -62,9 +63,9 @@ import { AuthService } from '../../services/auth.service';
     .collapse-button-fixed:hover {
       background: var(--bg-hover);
       border-color: var(--accent-1);
-      transform: translateY(-50%) scale(1.05);
+      --scale: 1.05;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), right 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     
     .collapse-button:focus-visible,
@@ -75,16 +76,18 @@ import { AuthService } from '../../services/auth.service';
     
     .collapse-button:active,
     .collapse-button-fixed:active {
-      transform: translateY(-50%) scale(0.95);
-      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), right 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease, transform 0.1s ease;
+      --scale: 0.95;
+      transition: transform 0.1s ease, background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
     }
     
     .collapse-button-left {
       border-radius: 0 8px 8px 0;
+      --x-offset: 0;
     }
     
     .collapse-button-right {
       border-radius: 8px 0 0 8px;
+      --x-offset: 0;
     }
     
     .arrow-icon {
@@ -99,11 +102,9 @@ import { AuthService } from '../../services/auth.service';
   template: `
     <div class="relative w-full h-full overflow-hidden">
       <!-- Left Sidebar - Overlaps top bar -->
-      <div class="fixed left-0 top-0 panel-transition z-50" 
-           [style.width]="leftPanelCollapsed() ? '0px' : '288px'"
-           [style.min-width]="leftPanelCollapsed() ? '0px' : '288px'"
-           [style.overflow]="leftPanelCollapsed() ? 'hidden' : 'visible'"
-           style="height: 100vh;">
+      <div class="fixed left-0 top-0 panel-transition z-50"
+           style="width: 288px; height: 100vh; overflow: visible;"
+           [style.transform]="leftPanelCollapsed() ? 'translateX(-100%)' : 'translateX(0)'">
         <app-sidebar class="w-72 h-full"
           (startNewSession)="router.navigate(['/conversation'])"
           (selectSession)="goToSession($event)"
@@ -111,19 +112,18 @@ import { AuthService } from '../../services/auth.service';
       </div>
 
       <!-- Right Documents Panel - Overlaps top bar -->
-      <div class="fixed right-0 top-0 panel-transition z-50" 
-           [style.width]="rightPanelCollapsed() ? '0px' : '288px'"
-           [style.min-width]="rightPanelCollapsed() ? '0px' : '288px'"
-           [style.overflow]="rightPanelCollapsed() ? 'hidden' : 'visible'"
-           style="height: 100vh;">
+      <div class="fixed right-0 top-0 panel-transition z-50"
+           style="width: 288px; height: 100vh; overflow: visible;"
+           [style.transform]="rightPanelCollapsed() ? 'translateX(100%)' : 'translateX(0)'">
         <app-documents-panel class="w-72 h-full"
           [documents]="documents()"
         ></app-documents-panel>
       </div>
 
-      <!-- Left Panel Collapse Button -->
-      <button class="collapse-button-fixed collapse-button-left z-60" 
-              [style.left]="leftPanelCollapsed() ? '0px' : '288px'"
+      <!-- Left Panel Collapse Button (fixed, synced to panel edge) -->
+      <button class="collapse-button-fixed collapse-button-left z-60"
+              style="left: 0;"
+              [style.--x-offset]="leftPanelCollapsed() ? '0px' : '288px'"
               (click)="toggleLeftPanel()"
               (keydown.enter)="toggleLeftPanel($event)"
               (keydown.space)="toggleLeftPanel($event)"
@@ -137,9 +137,10 @@ import { AuthService } from '../../services/auth.service';
         </svg>
       </button>
 
-      <!-- Right Panel Collapse Button -->
-      <button class="collapse-button-fixed collapse-button-right z-60" 
-              [style.right]="rightPanelCollapsed() ? '0px' : '288px'"
+      <!-- Right Panel Collapse Button (fixed, synced to panel edge) -->
+      <button class="collapse-button-fixed collapse-button-right z-60"
+              style="right: 0;"
+              [style.--x-offset]="rightPanelCollapsed() ? '0px' : '-288px'"
               (click)="toggleRightPanel()"
               (keydown.enter)="toggleRightPanel($event)"
               (keydown.space)="toggleRightPanel($event)"
@@ -168,6 +169,9 @@ export class PrivateLayoutComponent {
   constructor(public router: Router, private docs: DocumentsService, public auth: AuthService) {
     this.fetchDocuments();
     this.loadPanelStates();
+    // Safety: ensure initial state keeps buttons visible even if storage is corrupted
+    if (this.leftPanelCollapsed() === undefined as any) this.leftPanelCollapsed.set(false);
+    if (this.rightPanelCollapsed() === undefined as any) this.rightPanelCollapsed.set(false);
   }
 
   fetchDocuments() {
@@ -230,3 +234,4 @@ export class PrivateLayoutComponent {
     }
   }
 }
+
