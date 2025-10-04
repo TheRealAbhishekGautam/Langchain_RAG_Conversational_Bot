@@ -10,19 +10,22 @@ import { DocumentInfo } from '../../types/models';
   imports: [CommonModule, FormsModule],
   template: `
   <div class="h-full flex flex-col">
-  <div class="p-6 border-b border-theme flex items-center justify-between bg-theme/80">
-      <div>
-        <h2 class="text-lg font-semibold">Documents</h2>
-  <p class="text-xs text-theme-muted">Manage knowledge base documents</p>
+  <div class="p-6 border-b border-theme bg-theme/80">
+      <div class="max-w-5xl mx-auto flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-semibold">Documents</h2>
+          <p class="text-xs text-theme-muted">Manage knowledge base documents</p>
+        </div>
+        <label class="btn btn-primary cursor-pointer">
+          <input type="file" hidden (change)="upload($event)" accept=".pdf,.docx" />
+          Upload
+        </label>
       </div>
-      <label class="btn btn-primary cursor-pointer">
-        <input type="file" hidden (change)="upload($event)" accept=".pdf,.docx" />
-        Upload
-      </label>
     </div>
 
-    <div class="flex-1 overflow-auto p-6 space-y-4">
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="flex-1 overflow-auto p-6">
+      <div class="max-w-5xl mx-auto space-y-4">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div *ngFor="let d of documents()" class="card p-4 flex flex-col gap-3">
           <div class="flex items-start justify-between gap-2">
             <div class="flex-1 min-w-0">
@@ -34,8 +37,9 @@ import { DocumentInfo } from '../../types/models';
           <p class="text-[11px] text-theme-muted">Uploaded {{ d.upload_timestamp | date:'short' }}</p>
         </div>
       </div>
-  <p *ngIf="documents().length===0 && !loading()" class="text-sm text-theme-muted">No documents uploaded yet.</p>
-      <p *ngIf="error()" class="text-xs text-red-400">{{ error() }}</p>
+        <p *ngIf="documents().length===0 && !loading()" class="text-sm text-theme-muted">No documents uploaded yet.</p>
+        <p *ngIf="error()" class="text-xs text-red-400">{{ error() }}</p>
+      </div>
     </div>
   </div>
   `

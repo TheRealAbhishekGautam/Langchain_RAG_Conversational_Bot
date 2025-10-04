@@ -154,8 +154,8 @@ import { AuthService } from '../../services/auth.service';
         </svg>
       </button>
 
-      <!-- Main Content Area - Fixed position, always centered -->
-      <main class="w-full h-full overflow-hidden relative">
+  <!-- Main Content Area - Fixed position, always centered -->
+  <main class="w-full h-full overflow-hidden relative">
         <router-outlet></router-outlet>
       </main>
     </div>
