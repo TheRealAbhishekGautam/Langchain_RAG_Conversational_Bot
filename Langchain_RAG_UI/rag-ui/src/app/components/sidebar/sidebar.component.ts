@@ -23,10 +23,7 @@ dayjs.extend(relativeTime);
     /* Sidebar themed surface with subtle gradients and patterns */
     .sidebar-surface {
       position: relative;
-      background:
-        radial-gradient(800px 300px at 100% -10%, color-mix(in oklab, var(--accent-1), transparent 72%), transparent),
-        radial-gradient(700px 280px at -10% 110%, color-mix(in oklab, var(--accent-2), transparent 76%), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg-elev), transparent 0%) 0%, var(--bg-elev) 100%);
+      background: var(--bg-elev);
       backdrop-filter: blur(8px);
     }
     .sidebar-surface::before {
@@ -34,9 +31,19 @@ dayjs.extend(relativeTime);
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(600px 240px at -10% -20%, color-mix(in oklab, var(--accent-3), transparent 74%), transparent);
-      opacity: .65;
-      z-index: 0; /* keep background effects behind overlay */
+      /* Smooth panel-wide glow: center stays very soft, mid-radius gently brighter, fades to edges */
+      background:
+        radial-gradient(120% 120% at 50% 50%,
+          color-mix(in oklab, var(--accent-1), transparent 98%) 0%,
+          color-mix(in oklab, var(--accent-1), transparent 96%) 16%,
+          color-mix(in oklab, var(--accent-2), transparent 90%) 38%,
+          color-mix(in oklab, var(--accent-2), transparent 86%) 58%,
+          color-mix(in oklab, var(--accent-3), transparent 86%) 76%,
+          transparent 100%
+        ),
+        radial-gradient(560px 220px at -10% -20%, color-mix(in oklab, var(--accent-3), transparent 70%), transparent);
+      opacity: .6;
+      z-index: 1; /* above SVG overlay, below content */
     }
     .sidebar-surface::after {
       content: '';
@@ -47,7 +54,7 @@ dayjs.extend(relativeTime);
       background-size: 20px 20px;
       mask-image: linear-gradient(180deg, black, transparent 60%);
       opacity: .22;
-      z-index: 0; /* keep pattern behind overlay */
+      z-index: 1; /* above SVG overlay, below content */
     }
 
     /* Centered decorative SVG overlay */
@@ -58,31 +65,58 @@ dayjs.extend(relativeTime);
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      opacity: .45; /* slightly stronger so it's visible */
-      z-index: 1; /* above ::before/::after, below content */
+      opacity: .38; /* visible but let radial BG shine through */
+      z-index: 2; /* above ::before/::after overlays */
     }
     /* size the overlay component itself; child svg is inside another component */
     .panel-illustration app-orbital-system { width: 240px; height: 240px; display: block; }
-    @media (min-width: 1280px) { .panel-illustration svg { width: 260px; height: 260px; } }
-    .sidebar-surface > *:not(.panel-illustration) { position: relative; z-index: 2; }
+    /* ensure orbital system is above the radial glow */
+    .panel-illustration app-orbital-system { position: relative; z-index: 1; }
+    /* Radial gradient glow behind the SVG */
+    .panel-illustration .svg-radial-bg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 380px;
+      height: 380px;
+      border-radius: 9999px;
+      /* True radial glow: multi-stop alpha falloff, clipped to a circle */
+      background: radial-gradient(50% 50% at 50% 50%,
+        rgba(99, 102, 241, 0.20) 0%,
+        rgba(99, 102, 241, 0.14) 30%,
+        rgba(56, 189, 248, 0.10) 58%,
+        rgba(56, 189, 248, 0.04) 76%,
+        rgba(0, 0, 0, 0) 92%);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      clip-path: circle(50% at 50% 50%);
+      overflow: hidden;
+      opacity: .6;
+      z-index: 0;
+    }
+    @media (min-width: 1280px) {
+      .panel-illustration app-orbital-system { width: 260px; height: 260px; }
+      .panel-illustration .svg-radial-bg { width: 410px; height: 410px; }
+    }
+  .sidebar-surface > *:not(.panel-illustration) { position: relative; z-index: 3; }
 
     /* Intensity toggles */
-    .sidebar-surface.surface-intense {
-      background:
-        radial-gradient(900px 340px at 100% -10%, color-mix(in oklab, var(--accent-1), transparent 62%), transparent),
-        radial-gradient(800px 320px at -10% 110%, color-mix(in oklab, var(--accent-2), transparent 68%), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg-elev), transparent 0%) 0%, var(--bg-elev) 100%);
-    }
+    .sidebar-surface.surface-intense { background: var(--bg-elev); }
     .sidebar-surface.surface-intense::before {
-      background: radial-gradient(700px 260px at -10% -20%, color-mix(in oklab, var(--accent-3), transparent 62%), transparent);
-      opacity: .7;
-    }
-    .sidebar-surface.surface-subtle {
       background:
-        radial-gradient(800px 300px at 100% -10%, color-mix(in oklab, var(--accent-1), transparent 90%), transparent),
-        radial-gradient(700px 280px at -10% 110%, color-mix(in oklab, var(--accent-2), transparent 93%), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg-elev), transparent 0%) 0%, var(--bg-elev) 100%);
+        radial-gradient(125% 125% at 50% 50%,
+          color-mix(in oklab, var(--accent-1), transparent 96%) 0%,
+          color-mix(in oklab, var(--accent-1), transparent 94%) 16%,
+          color-mix(in oklab, var(--accent-2), transparent 86%) 38%,
+          color-mix(in oklab, var(--accent-2), transparent 82%) 58%,
+          color-mix(in oklab, var(--accent-3), transparent 82%) 76%,
+          transparent 100%
+        ),
+        radial-gradient(700px 280px at -10% -20%, color-mix(in oklab, var(--accent-3), transparent 64%), transparent);
+      opacity: .68;
     }
+    .sidebar-surface.surface-subtle { background: var(--bg-elev); }
 
     /* Gradient badge for icons */
     .badge-grad {
@@ -114,6 +148,7 @@ dayjs.extend(relativeTime);
   <aside class="h-full flex flex-col sidebar-surface surface-intense">
     <!-- Decorative centered SVG overlay -->
     <div class="panel-illustration" aria-hidden="true">
+      <div class="svg-radial-bg" aria-hidden="true"></div>
       <app-orbital-system [ringColors]="{start: 'var(--accent-1)', middle: 'var(--accent-2)', end: 'var(--accent-3)'}">
         <svg:defs>
           <svg:radialGradient id="aiBrainPulse" cx="50%" cy="50%" r="50%">

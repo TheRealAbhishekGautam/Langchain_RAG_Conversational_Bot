@@ -20,10 +20,7 @@ import { OrbitalSystemComponent } from '../shared/orbital-system.component';
     /* Themed surface with subtle gradient and pattern */
     .panel-surface {
       position: relative;
-      background:
-        radial-gradient(800px 300px at -10% -10%, color-mix(in oklab, var(--accent-2), transparent 72%), transparent),
-        radial-gradient(700px 280px at 110% 110%, color-mix(in oklab, var(--accent-1), transparent 76%), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg-elev), transparent 0%) 0%, var(--bg-elev) 100%);
+      background: var(--bg-elev);
       backdrop-filter: blur(8px);
     }
     .panel-surface::before {
@@ -31,48 +28,58 @@ import { OrbitalSystemComponent } from '../shared/orbital-system.component';
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(600px 240px at 110% -20%, color-mix(in oklab, var(--accent-3), transparent 74%), transparent);
-      opacity: .65;
-      z-index: 0; /* place behind overlay */
+      /* Smooth panel-wide glow: very light center, soft mid, fades outward (matched to Sessions panel) */
+      background:
+        radial-gradient(120% 120% at 50% 50%,
+          color-mix(in oklab, var(--accent-1), transparent 98%) 0%,
+          color-mix(in oklab, var(--accent-1), transparent 96%) 16%,
+          color-mix(in oklab, var(--accent-2), transparent 90%) 38%,
+          color-mix(in oklab, var(--accent-2), transparent 86%) 58%,
+          color-mix(in oklab, var(--accent-3), transparent 86%) 76%,
+          transparent 100%
+        ),
+        radial-gradient(560px 220px at -10% -20%, color-mix(in oklab, var(--accent-3), transparent 70%), transparent);
+      opacity: .6; /* matched */
+      z-index: 1; /* above SVG overlay, below content */
     }
     .panel-surface::after {
       content: '';
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background-image: radial-gradient(color-mix(in oklab, var(--accent-1), transparent 92%) 1px, transparent 1px);
+      /* Match Sessions pattern accent */
+      background-image: radial-gradient(color-mix(in oklab, var(--accent-2), transparent 92%) 1px, transparent 1px);
       background-size: 20px 20px;
       mask-image: linear-gradient(180deg, black, transparent 60%);
       opacity: .22;
-      z-index: 0; /* keep pattern behind overlay */
+      z-index: 1; /* above SVG overlay, below content */
     }
 
     /* Intensity toggles */
-    .panel-surface.surface-intense {
-      background:
-        radial-gradient(900px 340px at -10% -10%, color-mix(in oklab, var(--accent-2), transparent 62%), transparent),
-        radial-gradient(800px 320px at 110% 110%, color-mix(in oklab, var(--accent-1), transparent 68%), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg-elev), transparent 0%) 0%, var(--bg-elev) 100%);
-    }
+    .panel-surface.surface-intense { background: var(--bg-elev); }
     .panel-surface.surface-intense::before {
-      background: radial-gradient(700px 260px at 110% -20%, color-mix(in oklab, var(--accent-3), transparent 62%), transparent);
-      opacity: .7;
-    }
-    .panel-surface.surface-subtle {
       background:
-        radial-gradient(800px 300px at -10% -10%, color-mix(in oklab, var(--accent-2), transparent 90%), transparent),
-        radial-gradient(700px 280px at 110% 110%, color-mix(in oklab, var(--accent-1), transparent 93%), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg-elev), transparent 0%) 0%, var(--bg-elev) 100%);
+        radial-gradient(125% 125% at 50% 50%,
+          color-mix(in oklab, var(--accent-1), transparent 96%) 0%,
+          color-mix(in oklab, var(--accent-1), transparent 94%) 16%,
+          color-mix(in oklab, var(--accent-2), transparent 86%) 38%,
+          color-mix(in oklab, var(--accent-2), transparent 82%) 58%,
+          color-mix(in oklab, var(--accent-3), transparent 82%) 76%,
+          transparent 100%
+        ),
+        radial-gradient(700px 280px at -10% -20%, color-mix(in oklab, var(--accent-3), transparent 64%), transparent);
+      opacity: .68;
     }
+    .panel-surface.surface-subtle { background: var(--bg-elev); }
 
     .badge-grad {
       background: linear-gradient(135deg,
-        color-mix(in oklab, var(--accent-2), transparent 68%) 0%,
-        color-mix(in oklab, var(--accent-1), transparent 72%) 60%,
+        color-mix(in oklab, var(--accent-1), transparent 68%) 0%,
+        color-mix(in oklab, var(--accent-2), transparent 72%) 60%,
         color-mix(in oklab, var(--accent-3), transparent 76%) 100%);
       border: 1px solid color-mix(in oklab, var(--accent-2), transparent 75%);
       color: white;
-      box-shadow: 0 6px 16px -8px color-mix(in oklab, var(--accent-2), transparent 50%);
+      box-shadow: 0 6px 16px -8px color-mix(in oklab, var(--accent-1), transparent 50%);
     }
 
     .doc-item {
@@ -96,45 +103,46 @@ import { OrbitalSystemComponent } from '../shared/orbital-system.component';
       align-items: center;
       justify-content: center;
       pointer-events: none;
-      opacity: .45; /* make it slightly more visible */
-      z-index: 1; /* above ::before/::after */
+      opacity: .38; /* allow radial background to be seen */
+      z-index: 2; /* place above ::before/::after overlays */
     }
-    .panel-illustration app-orbital-system { width: 240px; height: 240px; display:block; }
-    @media (min-width: 1280px) { .panel-illustration svg { width: 260px; height: 260px; } }
-    .panel-surface > *:not(.panel-illustration) { position: relative; z-index: 2; }
-
-    .doc-item {
-      border: 1px solid transparent;
-      background: linear-gradient(var(--bg-elev), var(--bg-elev)) padding-box,
-                  linear-gradient(135deg, color-mix(in oklab, var(--accent-2), transparent 80%), color-mix(in oklab, var(--accent-1), transparent 85%)) border-box;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-    }
-    .doc-item:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px -12px color-mix(in oklab, var(--accent-2), transparent 40%);
-      background: linear-gradient(color-mix(in oklab, var(--bg-elev), transparent 0%), color-mix(in oklab, var(--bg-elev), transparent 0%)) padding-box,
-                  linear-gradient(135deg, color-mix(in oklab, var(--accent-2), transparent 65%), color-mix(in oklab, var(--accent-1), transparent 70%)) border-box;
-    }
-
-    /* Centered decorative SVG overlay */
-    .panel-illustration {
+    .panel-illustration app-orbital-system { width: 240px; height: 240px; display:block; position: relative; z-index: 1; }
+    /* Radial gradient glow behind the SVG */
+    .panel-illustration .svg-radial-bg {
       position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      opacity: .35;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 380px;
+      height: 380px;
+      border-radius: 9999px;
+      /* True radial glow: multi-stop alpha falloff, clipped to a circle */
+      background: radial-gradient(50% 50% at 50% 50%,
+        rgba(56, 189, 248, 0.20) 0%,
+        rgba(56, 189, 248, 0.14) 30%,
+        rgba(99, 102, 241, 0.10) 58%,
+        rgba(99, 102, 241, 0.04) 76%,
+        rgba(0, 0, 0, 0) 92%);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      clip-path: circle(50% at 50% 50%);
+      overflow: hidden;
+      opacity: .6;
       z-index: 0;
     }
-    .panel-illustration svg { width: 240px; height: 240px; }
-    @media (min-width: 1280px) { .panel-illustration svg { width: 260px; height: 260px; } }
-    .panel-surface > *:not(.panel-illustration) { position: relative; z-index: 1; }
+    @media (min-width: 1280px) {
+      .panel-illustration app-orbital-system { width: 260px; height: 260px; }
+      .panel-illustration .svg-radial-bg { width: 410px; height: 410px; }
+    }
+  .panel-surface > *:not(.panel-illustration) { position: relative; z-index: 3; }
+
+    /* Remove duplicate overlay and sizing rules that could override z-index */
   `],
   template: `
   <aside class="h-full flex flex-col panel-surface surface-intense w-72">
     <!-- Decorative centered SVG overlay -->
     <div class="panel-illustration" aria-hidden="true">
+      <div class="svg-radial-bg" aria-hidden="true"></div>
       <app-orbital-system [ringColors]="{start: 'var(--accent-2)', middle: 'var(--accent-1)', end: 'var(--accent-3)'}">
         <svg:defs>
           <svg:radialGradient id="documentPulse" cx="50%" cy="50%" r="50%">
